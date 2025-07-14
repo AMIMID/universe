@@ -413,12 +413,12 @@ data = (128*32).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
-	//mag=1;
+	//mag=1000;
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt));
 	pl=pl+1;
 			mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
-		sph=Spherical(mag*mk*1,az,el).asCartesian.asArray;
+		sph=Spherical(mag*mk,az,el).asCartesian.asArray;
 };
 	//pl=0;
 	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
@@ -452,7 +452,7 @@ Pen.translate(400,400);
 /////////////
 (
 {
-var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=1,m_y=1,m_z=1,qx,qy,mq=1;
+var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=1,m_y=1,m_z=1,qx,qy,mq=0;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z,mag_qx,mag_qy;
 var az4=0,el4=0,az5=0,el5=0,az6=0,el6=0,az7=0,el7=0;
 var azimuth,elevation,magnitudex,magnitudey,magnitudez;
