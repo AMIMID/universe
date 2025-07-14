@@ -407,9 +407,9 @@ var run = true;
 var ot=0.degrad,mk=1200;
 ~data=[];
 
-8.do{
+1.do{
 
-data = (16*32).collect{
+data = (128*32).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
@@ -417,10 +417,12 @@ data = (16*32).collect{
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt));
 	pl=pl+1;
+			mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
 		sph=Spherical(mag*mk*1,az,el).asCartesian.asArray;
 };
 	//pl=0;
-	mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200); ~data=~data++data;
+	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
+	~data=~data++data;
 };
 
 w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
