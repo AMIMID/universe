@@ -363,7 +363,7 @@ Pen.translate(400,400);
 /////////////
 (
 {
-var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=1000,m_y=1000,m_z=1000,qx,qy,mq=2;
+var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=10,m_y=10,m_z=10,qx,qy,mq=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z,mag_qx,mag_qy;
 var az4=0,el4=0,az5=0,el5=0,az6=0,el6=0,az7=0,el7=0;
 var azimuth,elevation,magnitudex,magnitudey,magnitudez;
@@ -373,6 +373,8 @@ var num=1.neg;
 var ellipsis=[1,1,1],spread=m_z;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
 	~dur=[];~az=[];~el=[];~magx=[];~magy=[];~magz=[];~qx=[];~qy=[];
+
+	spread = if(m_z < 1) { 1 / m_z } { m_z };
 
 	(2.pow(7)).do{
 azimuth=32.collect{
