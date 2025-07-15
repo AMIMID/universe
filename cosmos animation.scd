@@ -84,9 +84,9 @@ a.background = Color.black;
 	//m_y=~controlBus_my.getSynchronous;
 	//m_z=~controlBus_mz.getSynchronous;
 		//m=~controlBus_m.getSynchronous;
-	m_x=~controlBus_a .getSynchronous.abs;
-	m_y=~controlBus_a.getSynchronous.abs;
-	m_z=~controlBus_a.getSynchronous.abs;
+	m_x=~controlBus_a .getSynchronous;
+	m_y=~controlBus_a.getSynchronous;
+	m_z=~controlBus_a.getSynchronous;
 
 		spread = if(m_x < 1) { 1 / m_x } { m_x};
 
