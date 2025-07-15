@@ -207,7 +207,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
 		// mag=~magz.[pl];
 	pla=pla+1;
-			mk=(mk+(50-(50/1.6180339887499))).wrap(0,20);
+			mk=(mk+(20-(20/1.6180339887499))).wrap(0,20);
 		sph=Spherical(mag*mk*200*spread.reciprocal,az,el).asCartesian.asArray;
 };
 	//pl=0;
