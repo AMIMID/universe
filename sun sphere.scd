@@ -130,10 +130,11 @@ var azimuth,elevation,magnitudex,magnitudey,magnitudez;
 var durx,dury,durz,angle=0;
 var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=1,ply=1,plz=1;
 var num=1.neg;
-var ellipsis=[1,1,1],spread=m_z.reciprocal;
+var ellipsis=[1,1,1],spread=m_z;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
 	~dur=[];~az=[];~el=[];~magx=[];~magy=[];~magz=[];~qx=[];~qy=[];
 
+		spread = if(m_z < 1) { 1 / m_z } { m_z };
 	(2.pow(7)).do{
 azimuth=32.collect{
 
