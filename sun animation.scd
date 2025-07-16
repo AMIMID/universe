@@ -35,7 +35,7 @@ SynthDef.new(\player,{
 
 	//Out.kr(~controlBus_m.index, sig);
 	//Out.kr(~controlBus_m.index, sig);
-	Out.kr(~controlBus_a.index, (LFSaw.kr(1/(16*6),1,mul:1).range(0,10)).poll);
+	Out.kr(~controlBus_a.index, (LFSaw.kr(1/(32*6),1,mul:1).range(0,10)).poll);
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -88,8 +88,8 @@ a.background = Color.black;
 	m_y=~controlBus_a.getSynchronous;
 	m_z=~controlBus_a.getSynchronous;
 
-		spread = if(m_x < 1) {m_x } { 1 / m_x };
-	//spread=m_x.reciprocal;
+	//	spread = if(m_x < 1) {m_x } { 1 / m_x };
+	spread=m_x.reciprocal;
 
 
 
@@ -207,9 +207,9 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
 	pla=pla+1;
-		mm=(mm+1).wrap(1,14);
+		mm=(mm+1).wrap(1,1792);
 		//mm=1000;
-		sph=Spherical(mag*mm*10*spread.reciprocal,az,el).asCartesian.asArray;
+		sph=Spherical(mag*mm*1*spread.reciprocal,az,el).asCartesian.asArray;
 };
 	//pl=0;
 	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
@@ -219,7 +219,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	data =data++dota;
 	//data.postln;
  	a.data = data;            // Update ScatterView3d
-	(1/12).wait
+	(1/8).wait
 }});
 r.play;
 
