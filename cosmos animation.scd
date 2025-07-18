@@ -29,7 +29,7 @@ Buffer.freeAll;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([2.sqrt*~si,1,1,2.sqrt*~si],[~si/10,0,~si],[18,0,6]);
+	signal=Env([2.sqrt*~si,1,1,2.sqrt*~si],[~si/10,0,~si],[8,0,6]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w1.loadCollection(wt);
@@ -48,7 +48,7 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.5*1)+Saw.ar(0.1,mul:0.4),0.degrad,mul:1)).poll);
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.1*1)+Saw.ar(0.1,mul:0.11),0.degrad,mul:1)).poll);
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -237,8 +237,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	data =data++dota;
 	//data.postln;
  	a.data = data;  // Update ScatterView3d
-	a.symbolColor = Color.grey(nn.linlin(0,(size/3),0,1));
-    a.background = Color.grey(nn.linlin(0,(size/3),1,0));
+	a.symbolColor = Color.grey(nn.linlin(1,(size/3),0,1));
+    a.background = Color.grey(nn.linlin(1,(size/3),1,0));
 	(1/6).wait
 }});
 r.play;
