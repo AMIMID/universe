@@ -48,7 +48,7 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,0.04,0.degrad,mul:1)));
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.5*1)+Saw.ar(0.1,mul:0.4),0.degrad,mul:1)).poll);
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -228,7 +228,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
 		// mag=~magz.[pl];
 	pla=pla+1;
-			mk=(mk+(2.sqrt-(2.sqrt/1.6180339887499))).wrap(0,2.sqrt);
+			mk=(mk+(1-(1/1.6180339887499))).wrap(0,2.sqrt);
 		sph=Spherical((mag*mk)*(nn),az,el).asCartesian.asArray;
 };
 	//pl=0;
