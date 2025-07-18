@@ -19,11 +19,22 @@ Buffer.freeAll
 
 (
 Buffer.freeAll;
-~si=200;
+~si=400;
 //~controlBus_m = Bus.control(s, 1);
 ~controlBus_a = Bus.control(s, 1);
-~controlBus_a1 = Bus.control(s, 1);
+//~controlBus_a1 = Bus.control(s, 1);
 //~controlBus_spread = Bus.control(s, 1);
+
+	~w1= Buffer.alloc(s,2048);
+		{
+var signal,wt,m=0,amp,ph=0;
+
+	signal=Env([2.sqrt*~si,1,1,2.sqrt*~si],[~si/10,0,~si],[18,0,6]);
+
+	wt = signal.asSignal(1024).asWavetable;
+~w1.loadCollection(wt);
+signal.plot;
+		}.value;
 
 
 SynthDef.new(\player,{
@@ -37,7 +48,7 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (LFSaw.kr((LFSaw.kr(1/mod,0,mod).abs),1,mul:1).range(0,(size*2.sqrt))).poll);
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,0.04,0.degrad,mul:1)));
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -67,7 +78,7 @@ var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=0,ply=0,plz=0;
 var num=1.neg,amplitude,amplitude1,amplitude2,a,mod_angle,mod_angle1,mod_angle0;
 var ellipsis=[1,1,1],spread=1,mk=2.sqrt;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
-var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2);
+var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn;
 Synth.new(\player);
 data = [];
 
@@ -76,7 +87,7 @@ w = Window.new("3D Scatterplot", Rect(40,40,limdim , limdim)).front;
 ~v = UserView.new(w,Rect(0,0,limdim,limdim)).background_(Color.black);
 a = ScatterView3d(~v,Rect(0,0, limdim,limdim), data, [limd.neg, limd].asSpec,[limd.neg, limd].asSpec,[limd.neg, limd].asSpec);
 a.drawMethod = \fillRect;
-a.symbolSize = 1;
+a.symbolSize = 0.8;
 a.symbolColor = Color.white;
 a.background = Color.black;
 
@@ -87,16 +98,19 @@ a.background = Color.black;
 	//m_y=~controlBus_my.getSynchronous;
 	//m_z=~controlBus_mz.getSynchronous;
 		//m=~controlBus_m.getSynchronous;
-	m_x=~controlBus_a .getSynchronous.reciprocal;
-	m_y=~controlBus_a.getSynchronous.reciprocal;
-	m_z=~controlBus_a.getSynchronous.reciprocal;
+	nn=~controlBus_a.getSynchronous;
+	m_x=nn;
+	m_y=nn;
+	m_z=nn;
 
-//spread = if(m_x < 1) {m_x } { 1 / m_x };
-//	spread=m_x;
+	//spread=nn.reciprocal;
 	spread=1;
 
+//	m_x=m_x*size;
+//	m_y=m_y*size;
+//	m_z=m_z*size;
 
-
+//m_x.postln;
 
 	(
 {
@@ -205,7 +219,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	}
 }.value;
 );
-	dota=(128*8).collect{
+	dota=(128*32).collect{
 
 	az=~az.[pla];
 	el=~el.[pla];
@@ -215,7 +229,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		// mag=~magz.[pl];
 	pla=pla+1;
 			mk=(mk+(2.sqrt-(2.sqrt/1.6180339887499))).wrap(0,2.sqrt);
-		sph=Spherical((mag*mk)*m_x.reciprocal,az,el).asCartesian.asArray;
+		sph=Spherical((mag*mk)*(nn),az,el).asCartesian.asArray;
 };
 	//pl=0;
 	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
@@ -223,9 +237,9 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	data =data++dota;
 	//data.postln;
  	a.data = data;  // Update ScatterView3d
-	a.symbolColor = Color.grey(m_x.reciprocal.linlin(0,(size),0,1));
-	a.background = Color.grey(m_x.reciprocal.linlin(0,(size),1,0));
-	(1/12).wait
+	a.symbolColor = Color.grey(nn.linlin(0,(size/3),0,1));
+    a.background = Color.grey(nn.linlin(0,(size/3),1,0));
+	(1/6).wait
 }});
 r.play;
 
@@ -237,7 +251,7 @@ Pen.translate(400,400);
 		a.rot(ot,ot,ot);
     ~v.refresh;
 
-		ot=ot+137.5;
+		ot=ot+1.degrad;
 
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (1/12).wait } }.fork(AppClock);
