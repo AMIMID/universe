@@ -52,7 +52,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([100,0,0,100],[~si/10,0,~si],[64,0,128]);
+	signal=Env([100,0,0,100],[~si/10,0,~si],[64,0,64]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w3.loadCollection(wt);
