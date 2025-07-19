@@ -19,23 +19,63 @@ Buffer.freeAll
 
 (
 Buffer.freeAll;
-
+~si=400;
+~si2=~si*2;
 //~controlBus_m = Bus.control(s, 1);
 ~controlBus_a = Bus.control(s, 1);
 ~controlBus_a1 = Bus.control(s, 1);
+~controlBus_a2 = Bus.control(s, 1);
 //~controlBus_spread = Bus.control(s, 1);
+
+	~w1= Buffer.alloc(s,2048);
+		{
+var signal,wt,m=0,amp,ph=0;
+
+	signal=Env([1,2.sqrt*~si2,1],[~si,~si],[1,-1]);
+
+	wt = signal.asSignal(1024).asWavetable;
+~w1.loadCollection(wt);
+signal.plot;
+		}.value;
+
+	~w2= Buffer.alloc(s,2048);
+		{
+var signal,wt,m=0,amp,ph=0;
+
+	signal=Env([1,4096,1],[~si,~si],[8,-8]);
+
+	wt = signal.asSignal(1024).asWavetable;
+~w2.loadCollection(wt);
+signal.plot;
+		}.value;
+
+	~w3= Buffer.alloc(s,2048);
+		{
+var signal,wt,m=0,amp,ph=0;
+
+	signal=Env([100,0,100],[~si,~si],[-8,8]);
+
+	wt = signal.asSignal(1024).asWavetable;
+~w3.loadCollection(wt);
+signal.plot;
+		}.value;
+
 
 
 SynthDef.new(\player,{
 	arg tempo;
-	var env;
-	var sig1, sig2, sig3, sig4,control,sig;
+	var env,size=~si;
+	var sig1, sig2, sig3, sig4,control,sig,mod;
 
 	//sig=SinOsc.kr(0.01).range(1,4);
 
 	//Out.kr(~controlBus_m.index, sig);
-	//Out.kr(~controlBus_m.index, sig);
-	Out.kr(~controlBus_a.index, (LFSaw.kr(1/(32*6),1,mul:1).range(0,20)).poll);
+	//Out.kr(~controlBus_m.index, sig)
+	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
+	mod=0.1;
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -63,8 +103,9 @@ var azimuth,elevation,magnitudex,magnitudey,magnitudez,magnitudeqx,magnitudeqy;
 var durx,dury,durz;
 var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=0,ply=0,plz=0;
 var num=1.neg,amplitude,amplitude1,amplitude2,a,mod_angle,mod_angle1,mod_angle0;
-var ellipsis=[1,1,1],spread=1,mk=20;
+var ellipsis=[1,1,1],spread=1,mk=1;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
+var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc;
 Synth.new(\player);
 data = [];
 
@@ -84,11 +125,15 @@ a.background = Color.black;
 	//m_y=~controlBus_my.getSynchronous;
 	//m_z=~controlBus_mz.getSynchronous;
 		//m=~controlBus_m.getSynchronous;
-	m_x=~controlBus_a .getSynchronous.abs;
-	m_y=~controlBus_a.getSynchronous.abs;
-	m_z=~controlBus_a.getSynchronous.abs;
+	nn=~controlBus_a.getSynchronous;
+	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
+	ccc=~controlBus_a2.getSynchronous;
+	m_x= nn.reciprocal;
+	m_y= nn.reciprocal;
+	m_z= nn.reciprocal;
 
-		spread = if(m_x < 1) { 1 / m_x } { m_x};
+	spread=1;
+		//spread = if(m_x < 1) { 1 / m_x } { m_x};
 
 
 	(
@@ -198,17 +243,17 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	}
 }.value;
 );
-	dota=(128*14).collect{
+	dota=(cc).collect{
 
 	az=~az.[pla];
-		el=~el.[pla].wrap((4.5*spread.neg).degrad,(4.5*spread).degrad);
+		el=~el.[pla].wrap((cc.reciprocal*4000).neg.degrad,(cc.reciprocal*4000).degrad);
 	//mag=1000;
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
 		// mag=~magz.[pl];
 	pla=pla+1;
-			mk=(mk+(20-(20/1.6180339887499))).wrap(0,20);
-		sph=Spherical(mag*mk*200*spread.reciprocal,az,el).asCartesian.asArray;
+					mk=(mk+(1-(1/1.6180339887499))).wrap(0,1);
+		sph=Spherical((mag*mk)*(nn),az,el).asCartesian.asArray;
 };
 	//pl=0;
 	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
@@ -217,7 +262,9 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	data =data++dota;
 	//data.postln;
  	a.data = data;            // Update ScatterView3d
-	(1/12).wait
+			a.symbolColor = Color.grey(ccc.linlin(0,100,1,0));
+    a.background = Color.grey(ccc.linlin(0,100,0,1));
+	(1/6).wait
 }});
 r.play;
 
