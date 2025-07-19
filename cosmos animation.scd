@@ -102,7 +102,7 @@ var azimuth,elevation,magnitudex,magnitudey,magnitudez,magnitudeqx,magnitudeqy;
 var durx,dury,durz;
 var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=0,ply=0,plz=0;
 var num=1.neg,amplitude,amplitude1,amplitude2,a,mod_angle,mod_angle1,mod_angle0;
-var ellipsis=[1,1,1],spread=1,mk=2.sqrt;
+var ellipsis=[1,1,1],spread=1,mk=1;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
 var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc;
 Synth.new(\player);
