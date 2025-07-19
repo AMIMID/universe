@@ -127,9 +127,9 @@ a.background = Color.black;
 	nn=~controlBus_a.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous.postln;
-	m_x=nn;
-	m_y=nn;
-	m_z=nn;
+	m_x= nn.reciprocal;
+	m_y= nn.reciprocal;
+	m_z= nn.reciprocal;
 
 	//spread=nn.reciprocal;
 	spread=1;
