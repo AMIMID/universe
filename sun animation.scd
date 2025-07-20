@@ -20,7 +20,7 @@ Buffer.freeAll
 (
 Buffer.freeAll;
 ~si=400;
-~si2=~si*1;
+~si2=~si*2;
 //~controlBus_m = Bus.control(s, 1);
 ~controlBus_a = Bus.control(s, 1);
 ~controlBus_a1 = Bus.control(s, 1);
@@ -128,10 +128,10 @@ a.background = Color.black;
 	nn=~controlBus_a.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous;
-	m_x= nn.reciprocal;
-	m_y= nn.reciprocal;
-	m_z= nn.reciprocal;
-
+	m_x= nn.reciprocal*2.sqrt*~si2;
+	m_y= nn.reciprocal*2.sqrt*~si2;
+	m_z= nn.reciprocal*2.sqrt*~si2;
+m_x.postln;
 	spread=nn.reciprocal;
 		//spread = if(m_x < 1) { 1 / m_x } { m_x};
 
