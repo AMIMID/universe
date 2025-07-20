@@ -3,7 +3,7 @@
 
 (
 var angle=0;
-8.do{	angle=(angle+(360-(360/(8/5)))).wrap(0,360); angle.postln;}
+89.do{	angle=(angle+(360-(360/(89/55)))).wrap(0,360); angle.postln;}
 )
 
 
@@ -20,3 +20,9 @@ var angle=0;
 .
 .
 .
+
+0	1	1	2	3	5	8	13	21	34	55	89	144	233	377	610	987	1597	2584	418
+
+
+for cycle division of 89 degrees
+360-(360/(89/55))
