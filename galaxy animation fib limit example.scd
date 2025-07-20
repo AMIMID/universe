@@ -31,7 +31,7 @@ Buffer.freeAll;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,2.sqrt*~si2,1],[~si,~si],[1,-1]);
+	signal=Env([1,2.sqrt*~si2,1],[~si,~si/5],[1,-1]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w1.loadCollection(wt);
@@ -42,7 +42,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,2848,1],[~si,~si],[8,-8]);
+	signal=Env([1,2848,1],[~si,~si/5],[8,-8]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w2.loadCollection(wt);
@@ -53,7 +53,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([100,0,100],[~si,~si],[-8,8]);
+	signal=Env([100,0,100],[~si,~si],[-64,64]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w3.loadCollection(wt);
