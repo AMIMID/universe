@@ -109,10 +109,10 @@ var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc;
 Synth.new(\player);
 data = [];
 
-w = Window.new("3D Scatterplot", Rect(40,40, 1000, 1000)).front;
+w = Window.new("3D Scatterplot", Rect(40,40,limdim , limdim)).front;
 
-~v = UserView.new(w,Rect(0,0,1000,1000)).background_(Color.black);
-a = ScatterView3d(~v, Rect(0,0, 1000,1000), data, [-2000, 2000].asSpec,[-2000, 2000].asSpec,[-2000, 2000].asSpec);
+~v = UserView.new(w,Rect(0,0,limdim,limdim)).background_(Color.black);
+a = ScatterView3d(~v,Rect(0,0, limdim,limdim), data, [limd.neg, limd].asSpec,[limd.neg, limd].asSpec,[limd.neg, limd].asSpec);
 a.drawMethod = \fillRect;
 a.symbolSize = 1;
 a.symbolColor = Color.white;
