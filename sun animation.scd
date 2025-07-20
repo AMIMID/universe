@@ -31,7 +31,7 @@ Buffer.freeAll;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,2.sqrt*~si2,1],[~si,~si/5],[2,-32]);
+	signal=Env([100,2.sqrt*~si2,1],[~si,~si/5],[2,-32]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w1.loadCollection(wt);
@@ -128,11 +128,11 @@ a.background = Color.black;
 	nn=~controlBus_a.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous;
-	m_x= nn.reciprocal*2.sqrt*~si2;
-	m_y= nn.reciprocal*2.sqrt*~si2;
-	m_z= nn.reciprocal*2.sqrt*~si2;
-m_x.postln;
-	spread=nn.reciprocal;
+	m_x= nn.reciprocal*size;
+	m_y= nn.reciprocal*size;
+	m_z= nn.reciprocal*size;
+	spread=nn.reciprocal*size;
+	spread.postln;
 		//spread = if(m_x < 1) { 1 / m_x } { m_x};
 
 
