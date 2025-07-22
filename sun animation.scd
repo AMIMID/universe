@@ -14,7 +14,7 @@ s.boot;
 
 Buffer.freeAll
 
-
+233*12
 
 
 (
@@ -42,7 +42,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,4096,1],[~si,~si/5],[4,-8]);
+	signal=Env([100,2796,10],[~si,~si/5],[2,-32]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w2.loadCollection(wt);
@@ -84,11 +84,7 @@ SynthDef.new(\player,{
 }).add;
 )
 
-
-Server.freeAll
-
-
-//////////////////////////////////////////////////////////////////////animation
+/.,/////////////////////////////////////////////////////////////////////animation
 
 (
 var data;
@@ -105,7 +101,7 @@ var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=0,ply=0,plz=0;
 var num=1.neg,amplitude,amplitude1,amplitude2,a,mod_angle,mod_angle1,mod_angle0;
 var ellipsis=[1,1,1],spread=1,mk=10;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1,mm=0;
-var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc;
+var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc,s;
 
 Synth.new(\player);
 data = [];
@@ -126,15 +122,16 @@ a.background = Color.black;
 	//m_z=~controlBus_mz.getSynchronous;
 		//m=~controlBus_m.getSynchronous;
 	nn=~controlBus_a.getSynchronous;
+	s=~controlBus_a1.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous;
-	m_x= nn.reciprocal*size;
-	m_y= nn.reciprocal*size;
-	m_z= nn.reciprocal*size;
-	spread=nn.reciprocal*size;
-	spread.postln;
+	m_x= (s/1000).reciprocal;
+	m_y= (s/1000).reciprocal;
+	m_z= (s/1000).reciprocal;
+	spread= (s/1000);
+	cc.postln;
+	//m_x.postln;
 		//spread = if(m_x < 1) { 1 / m_x } { m_x};
-
 
 
 	(
@@ -142,8 +139,8 @@ a.background = Color.black;
 	~dur=[];~az=[];~el=[];~magx=[];~magy=[];~magz=[];~qx=[];~qy=[];
 
 
-	(2.pow(7)).do{
-azimuth=32.collect{
+	(233).do{
+azimuth=12.collect{
 
 			az1 = (az1+(360-(360/1.6180339887499))).wrap(180.neg,180);  // Increment azimuth
 				el1 = (el1+(180-(180/1.6180339887499))).wrap(90.neg,90);
@@ -162,7 +159,7 @@ elevation=(32).collect{
 
 	};
 
-			magnitudex=	32.collect{
+			magnitudex=	12.collect{
 			az3 = (az3+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el3 = (el3+ (180-(180/1.6180339887499))).wrap(90.neg,90);
 
@@ -175,7 +172,7 @@ elevation=(32).collect{
 				};
 
 
-	magnitudey=	32.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudey=	12.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
 				el4 = (el4+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag4=(mag4+(1-(1/1.6180339887499))).wrap(0,1);
@@ -187,7 +184,7 @@ elevation=(32).collect{
 				};
 
 
-	qx=	32.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	qx=	12.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el5 = (el5+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag5=(mag5+(1-(1/1.6180339887499))).wrap(0,1);
@@ -204,7 +201,7 @@ cos((sph5.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-		qy=	32.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
+		qy=	12.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el6 = (el6+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag6=(mag6+(1-(1/1.6180339887499))).wrap(0,1);
@@ -219,7 +216,7 @@ cos((sph6.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-	magnitudez=	32.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudez=	12.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el7 = (el7+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag7=(mag7+(1-(1/1.6180339887499))).wrap(0,1);
@@ -251,7 +248,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
 	pla=pla+1;
-		mm=(mm+0.01).wrap(0,1);
+		mm=(m+(1-(1/1.6180339887499))).wrap(0,1);
 		//mm=1000;
 		sph=Spherical((mag*mm)*(nn),az,el).asCartesian.asArray;
 };
@@ -265,7 +262,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
  	a.data = data;            // Update ScatterView3d
 				a.symbolColor = Color.grey(ccc.linlin(0,100,1,0));
     a.background = Color.grey(ccc.linlin(0,100,0,1));
-	(1/6).wait
+	(1/8).wait
 }});
 r.play;
 
@@ -277,7 +274,7 @@ Pen.translate(400,400);
 		a.rot(ot,ot,ot);
     ~v.refresh;
 
-		ot=ot+0.1.degrad;
+		ot=ot+0.2.degrad;
 
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (0.0001).wait } }.fork(AppClock);
