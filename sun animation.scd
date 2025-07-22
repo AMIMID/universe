@@ -42,7 +42,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([100,2796,10],[~si,~si/5],[2,-32]);
+	signal=Env([10,100,1000,2796,1],[~si/3,~si/3,~si/3,~si/5],[2,2,-2,-32]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w2.loadCollection(wt);
@@ -84,7 +84,7 @@ SynthDef.new(\player,{
 }).add;
 )
 
-/.,/////////////////////////////////////////////////////////////////////animation
+/////////////////////////////////////////////////////////////////////animation
 
 (
 var data;
@@ -274,7 +274,7 @@ Pen.translate(400,400);
 		a.rot(ot,ot,ot);
     ~v.refresh;
 
-		ot=ot+0.2.degrad;
+		ot=ot+1.degrad;
 
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (0.0001).wait } }.fork(AppClock);
