@@ -30,7 +30,7 @@ Buffer.freeAll;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,2.sqrt*~si,1],[~si,~si/10],[4,16]);
+	signal=Env([1,2.sqrt*~si,1],[~si/3,~si/3],[4,256]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w1.loadCollection(wt);
@@ -41,7 +41,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([4096,1,4096],[~si,~si/10],[8,8]);
+	signal=Env([0,2796,0],[~si/12,~si/3],[8,512]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w2.loadCollection(wt);
@@ -52,7 +52,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([0,100,0],[~si,~si/10],[64,4]);
+	signal=Env([100,100,0,100],[~si/12,~si/3,~si/3],[0,-32,64]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w3.loadCollection(wt);
@@ -72,9 +72,9 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+Saw.ar(0.1,mul:0.01),0.degrad,mul:1)));
-	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+Saw.ar(0.1,mul:0.01),0.degrad,mul:1)));
-	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+Saw.ar(0.1,mul:0.01),0.degrad,mul:1)));
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.01*1)*SinOsc.kr((0.01/2),90.degrad,mul:10).abs,0.degrad,mul:1)));
+	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.01*1)*SinOsc.kr((0.01/2),90.degrad,mul:10).abs,0.degrad,mul:1)));
+	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.01*1)*SinOsc.kr((0.01/1),90.degrad,mul:10).abs,0.degrad,mul:1)));
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -104,7 +104,7 @@ var sphx,sphy,sphz,azx,elx,azy,ely,azz,elz,plx=0,ply=0,plz=0;
 var num=1.neg,amplitude,amplitude1,amplitude2,a,mod_angle,mod_angle1,mod_angle0;
 var ellipsis=[1,1,1],spread=1,mk=1;
 var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
-var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc;
+var size=~si,limdim=(2*(size*2.sqrt+1)), limd=(size*2.sqrt*2),nn,cc,ccc,s;
 Synth.new(\player);
 data = [];
 
@@ -126,26 +126,26 @@ a.background = Color.black;
 		//m=~controlBus_m.getSynchronous;
 	nn=~controlBus_a.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
-	ccc=~controlBus_a2.getSynchronous.postln;
-	m_x= nn;
-	m_y= nn;
-	m_z= nn;
+	ccc=~controlBus_a2.getSynchronous;
+	m_x= nn/(2.sqrt*(size/size));
+	m_y= nn/(2.sqrt*(size/size));
+	m_z= nn/(2.sqrt*(size/size));
 
 	//spread=nn.reciprocal;
-	spread=1;
+	spread=(nn).reciprocal*(2.sqrt*(size/1));
 
 //	m_x=m_x*size;
 //	m_y=m_y*size;
 //	m_z=m_z*size;
-//m_x.postln;
+spread.postln;
 
 	(
 {
 	~dur=[];~az=[];~el=[];~magx=[];~magy=[];~magz=[];~qx=[];~qy=[];
 
 
-	(2.pow(7)).do{
-azimuth=32.collect{
+	233.do{
+azimuth=12.collect{
 
 			az1 = (az1+(360-(360/1.6180339887499))).wrap(180.neg,180);  // Increment azimuth
 				el1 = (el1+(180-(180/1.6180339887499))).wrap(90.neg,90);
@@ -164,7 +164,7 @@ elevation=(32).collect{
 
 	};
 
-			magnitudex=	32.collect{
+			magnitudex=	12.collect{
 			az3 = (az3+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el3 = (el3+ (180-(180/1.6180339887499))).wrap(90.neg,90);
 
@@ -177,7 +177,7 @@ elevation=(32).collect{
 				};
 
 
-	magnitudey=	32.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudey=	12.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
 				el4 = (el4+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag4=(mag4+(1-(1/1.6180339887499))).wrap(0,1);
@@ -189,7 +189,7 @@ elevation=(32).collect{
 				};
 
 
-	qx=	32.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	qx=	12.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el5 = (el5+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag5=(mag5+(1-(1/1.6180339887499))).wrap(0,1);
@@ -206,7 +206,7 @@ cos((sph5.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-		qy=	32.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
+		qy=	12.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el6 = (el6+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag6=(mag6+(1-(1/1.6180339887499))).wrap(0,1);
@@ -221,7 +221,7 @@ cos((sph6.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-	magnitudez=	32.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudez=	12.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el7 = (el7+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag7=(mag7+(1-(1/1.6180339887499))).wrap(0,1);
