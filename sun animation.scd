@@ -73,9 +73,9 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
-	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
-	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -125,12 +125,12 @@ a.background = Color.black;
 	s=~controlBus_a1.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous;
-	m_x= (s/1000).reciprocal;
-	m_y= (s/1000).reciprocal;
-	m_z= (s/1000).reciprocal;
-	spread= (s/1000);
-	cc.postln;
-	//m_x.postln;
+	m_x= (s).reciprocal*(2.sqrt*(size/1));
+	m_y= (s).reciprocal*(2.sqrt*(size/1));
+	m_z= (s).reciprocal*(2.sqrt*(size/1));
+	spread= (s/(2.sqrt*(size/1)));
+	//spread.postln;
+	spread.postln;
 		//spread = if(m_x < 1) { 1 / m_x } { m_x};
 
 
