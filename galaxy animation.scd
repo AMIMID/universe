@@ -31,7 +31,7 @@ Buffer.freeAll;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([100,2.sqrt*~si2,1],[~si,~si/5],[1,-1]);
+	signal=Env([100,2.sqrt*~si,1],[~si,~si/5],[1,-1]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w1.loadCollection(wt);
@@ -42,7 +42,7 @@ signal.plot;
 		{
 var signal,wt,m=0,amp,ph=0;
 
-	signal=Env([1,4096,1],[~si,~si/5],[8,-8]);
+	signal=Env([0,2796,0],[~si,~si/5],[8,-8]);
 
 	wt = signal.asSignal(1024).asWavetable;
 ~w2.loadCollection(wt);
@@ -73,9 +73,9 @@ SynthDef.new(\player,{
 	//Out.kr(~controlBus_m.index, sig)
 	//mod=LFNoise1.kr(1.6180339887499,1/1.6180339887499)
 	mod=0.1;
-	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
-	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
-	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+Saw.ar(0.05,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a.index, (Osc.kr(~w1.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a1.index, (Osc.kr(~w2.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
+	Out.kr(~controlBus_a2.index, (Osc.kr(~w3.bufnum,(0.05*1)+LFSaw.ar(0.05,1,mul:0.001),0.degrad,mul:1)));
 	//Out.kr(~controlBus_a1.index, SinOsc.kr(1,90.degrad,mul:1).range(10.neg,00));
 
 //Out.ar(0,sig*1);
@@ -121,28 +121,24 @@ a.background = Color.black;
   r= Routine({loop{
 
 	data=[];
-	//m_x=~controlBus_mx.getSynchronous;
-	//m_y=~controlBus_my.getSynchronous;
-	//m_z=~controlBus_mz.getSynchronous;
-		//m=~controlBus_m.getSynchronous;
 	nn=~controlBus_a.getSynchronous;
 	cc=~controlBus_a1.getSynchronous.round(1).asInteger;
 	ccc=~controlBus_a2.getSynchronous;
-	m_x= nn/size;
-	m_y= nn/size;
-	m_z= nn/size;
-m_x.postln;
-	spread=1;
-		//spread = if(m_x < 1) { 1 / m_x } { m_x};
+	m_x= nn/(2.sqrt*(size/4));
+	m_y= nn/(2.sqrt*(size/4));
+	m_z= nn/(2.sqrt*(size/4));
 
+	//spread=nn.reciprocal;
+		spread=(nn).reciprocal*(2.sqrt*(size/4));
+spread.postln;
 
 	(
 {
 	~dur=[];~az=[];~el=[];~magx=[];~magy=[];~magz=[];~qx=[];~qy=[];
 
 
-	(2.pow(7)).do{
-azimuth=32.collect{
+	233.do{
+azimuth=12.collect{
 
 			az1 = (az1+(360-(360/1.6180339887499))).wrap(180.neg,180);  // Increment azimuth
 				el1 = (el1+(180-(180/1.6180339887499))).wrap(90.neg,90);
@@ -161,7 +157,7 @@ elevation=(32).collect{
 
 	};
 
-			magnitudex=	32.collect{
+			magnitudex=	12.collect{
 			az3 = (az3+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el3 = (el3+ (180-(180/1.6180339887499))).wrap(90.neg,90);
 
@@ -174,7 +170,7 @@ elevation=(32).collect{
 				};
 
 
-	magnitudey=	32.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudey=	12.collect{		az4 = (az4+(360-(360/1.6180339887499))).wrap(180.neg,180);
 				el4 = (el4+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag4=(mag4+(1-(1/1.6180339887499))).wrap(0,1);
@@ -186,7 +182,7 @@ elevation=(32).collect{
 				};
 
 
-	qx=	32.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	qx=	12.collect{		az5 = (az5+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el5 = (el5+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag5=(mag5+(1-(1/1.6180339887499))).wrap(0,1);
@@ -203,7 +199,7 @@ cos((sph5.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-		qy=	32.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
+		qy=	12.collect{		az6 = (az6+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el6 = (el6+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag6=(mag6+(1-(1/1.6180339887499))).wrap(0,1);
@@ -218,7 +214,7 @@ cos((sph6.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spr
 				};
 
 
-	magnitudez=	32.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
+	magnitudez=	12.collect{		az7 = (az7+(360-(360/1.6180339887499))).wrap(180.neg,180);
 			el7 = (el7+(180-(180/1.6180339887499))).wrap(90.neg,90);
 
 				mag7=(mag7+(1-(1/1.6180339887499))).wrap(0,1);
@@ -246,7 +242,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	dota=(cc).collect{
 
 	az=~az.[pla];
-		el=~el.[pla].wrap((cc.reciprocal*4000).neg.degrad,(cc.reciprocal*4000).degrad);
+		el=~el.[pla].wrap((nn.reciprocal*(2.sqrt*~si)*4).neg.degrad,(nn.reciprocal*(2.sqrt*~si)*4).degrad);
 	//mag=1000;
 	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
 				 mag=(Cartesian(~magx.[pla],~magy.[pla],~magz.[pla]).rho/(2.sqrt));
@@ -276,7 +272,7 @@ Pen.translate(400,400);
 		a.rot(ot,ot,ot);
     ~v.refresh;
 
-		ot=ot+0.5.degrad;
+		ot=ot+0.3.degrad;
 
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (0.0001).wait } }.fork(AppClock);
