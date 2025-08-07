@@ -330,7 +330,7 @@ SynthDef.new(\ospace, {
 q1=Quaternion(0,sph.x,sph.y,sph.z); q2=Quaternion(0,sph8.x,sph8.y,sph8.z);
 dist=q1.distance(q2);
 
-			env=EnvGen.ar(Env.perc(dist.lag(0.1)*0.1,decay,amp),doneAction:2,levelScale:0.005);
+			env=EnvGen.ar(Env.perc(dist.lag(0.1)*0.01,decay,amp),doneAction:2,levelScale:0.005);
 
 scale=57.collect{nn=nn+1;Scale.major.performDegreeToKey(nn,12)};
 scale1=29.collect{ns1=ns1+1;Scale.major.performDegreeToKey(ns1,12)};
@@ -379,7 +379,7 @@ cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spre
 						//phase=Complex(sph.theta.linlin(pi.neg,pi,1.neg,1),sph.phi.linlin((pi/2).neg,(pi/2),1.neg,1)).theta;
 			per=Spherical(360.degrad,sph.theta,sph.phi);
 			phase=(per.x+per.y+per.z).wrap(2pi.neg,2pi);
-				mod_angle2=SinOsc.ar(lfo2,phase).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
+				mod_angle2=LFNoise1.ar(lfo2).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 			//mod_angle2=LFNoise1.ar(lfo2).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 
 harm=((Complex(cos(((sph.phi+mod_angle2).round(0.00001)*mh).wrap((pi/2).neg,(pi/2))),cos(((sph.phi).round(0.00001)*mh).wrap((pi/2).neg,(pi/2)))).rho/(2.sqrt)).pow(spread));
@@ -447,23 +447,23 @@ v3=axis3*v2*axis3.conjugate;
 
 qsphe=Cartesian(v3.b,v3.c,v3.d).asSpherical;
 
-osc1=VBAP.ar(4,VOsc.ar(0,pitch1,mul:amp1*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+			osc1=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch1,mul:amp1*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 			Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc2=VBAP.ar(4,VOsc.ar(0,pitch2,mul:amp2*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc2=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch2,mul:amp2*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc3=VBAP.ar(4,VOsc.ar(0,pitch3,mul:amp3*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc3=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch3,mul:amp3*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc4=VBAP.ar(4,VOsc.ar(0,pitch4,mul:amp4*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc4=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch4,mul:amp4*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc5=VBAP.ar(4,VOsc.ar(0,pitch5,mul:amp5*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc5=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch5,mul:amp5*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc6=VBAP.ar(4,VOsc.ar(0,pitch6,mul:amp6*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc6=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch6,mul:amp6*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc7=VBAP.ar(4,VOsc.ar(0,pitch7,mul:amp7*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc7=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch7,mul:amp7*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc8=VBAP.ar(4,VOsc.ar(0,pitch8,mul:amp8*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc8=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch8,mul:amp8*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
-osc9=VBAP.ar(4,VOsc.ar(0,pitch9,mul:amp9*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
+osc9=VBAP.ar(4,VOsc.ar(MouseX.kr(0,1),pitch9,mul:amp9*mag,phase:phase),~b.bufnum,qsphe.theta.raddeg,
 				Osc.ar(~t.bufnum,cell,qsphe.phi).range(90.neg,90));
 
 Out.ar(0,LeakDC.ar(osc1,mul:env));
@@ -503,7 +503,7 @@ Out.ar(0,LeakDC.ar(osc9,mul:env));
 			\pl1,Pseq(~list1,inf),    ///////coordinate selection
 			\pl2,Pseq(~list1,inf),
 		\lfo,Prand([0.001,0.0001,0.001,0.0001,0.001,0.0001,0.01],inf), /////mag spherical harmonic oscillation
-		\lfo2,Pbrown(0.01,0.1,0.1,inf), /////tone spherical harmonic oscillation
+		\lfo2,Pexprand(1,6,inf), /////tone spherical harmonic oscillation
 			\cell,Prand([0.001,0.0001,0.001,0.0001,0.001,0.0001,0.01],inf), ///////speed of 4dimensional oscillation
 		\rot_angle,Pseq(~angle,inf),
 		//\lfo,1/2,
@@ -514,7 +514,7 @@ Out.ar(0,LeakDC.ar(osc9,mul:env));
 		//\amount,Prand([4,5,6,7,8],inf),   /////sphere ripple waves amount
 		\amount,7,
 		\varamp,Pbrown(1,4,0.1,inf), /////ripple amp
-		\decay,Pbrown(2,4,1,inf),
+		\decay,Pbrown(8,16,1,inf),
 		//\varamp,1,
 			//	\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
@@ -522,7 +522,7 @@ Out.ar(0,LeakDC.ar(osc9,mul:env));
 	\amp,Pseq(~r,inf);///l system
 	//		\amp,1;
 	)));
-	TempoClock.default.tempo_(8);
+	TempoClock.default.tempo_(3);
 
 
 
