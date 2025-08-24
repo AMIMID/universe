@@ -144,6 +144,12 @@ var c=1,angle=0;
 
 
 
+/////////silver ratio
+(
+{Out.ar(0,SinOsc.ar(220*2.414213562.pow(MouseX.kr(0,992).round(1).poll/992),90.degrad,mul:2.414213562.pow(MouseX.kr(0,992).round(1)/992).reciprocal))}.play;
+{Out.ar(1,SinOsc.ar(220*2.414213562.pow(MouseX.kr(0,992).round(1).poll/992),mul:2.414213562.pow(MouseX.kr(0,992).round(1)/992).reciprocal))}.play;
+)
+
 
 
 
