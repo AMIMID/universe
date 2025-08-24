@@ -36,7 +36,7 @@ var signal,wt,m=0,amp,ph=0;
 		signal=Signal.sineFill(1024,~levell,[0]);
 
 wt = signal.asWavetable;
-~w1.loadCollection(wt);
+//~w1.loadCollection(wt);
 signal.plot;
 		}.value;
 
@@ -49,16 +49,10 @@ var wt,sig;
 	sig.waveFill({
 		arg x, old,i;
 		var out;
-				out=sin((x+~angle.[0].degrad))+
-				(sin(2*(x+~angle.[1].degrad))*(1/2))+
-				(sin((3/1)*(x+~angle.[2].degrad))*(1/3))+
-				(sin((4/1)*(x+~angle.[3].degrad))*(1/4))+
-				(sin((5/1)*(x+~angle.[4].degrad))*(1/5))+
-				(sin((6/1)*(x+~angle.[5].degrad))*(1/6))+
-				(sin((7/1)*(x+~angle.[6].degrad))*(1/7))+
-				(sin((8/1)*(x+~angle.[7].degrad))*(1/8))+
-				(sin((9/1)*(x+~angle.[8].degrad))*(1/9))+
-				(sin((10/1)*(x+~angle.[9].degrad))*(1/10));
+				out=
+				(sin((9/1)*(x+~angle.[0].degrad))*(1/9))+
+				(sin((6/1)*(x+~angle.[1].degrad))*(1/6))
+
 	},0,2pi);
 
 wt = sig.asWavetable;
@@ -296,7 +290,7 @@ elz = (elz+(180-(180/1.6180339887499))).wrap(90.neg,90);
 		(
 SynthDef.new(\ospace, {
 	arg amp=1,pl1=0,lfo,spread=1,ripple=0.01,amount=1,decay=8,varamp=5,coo,cell=1,pl2=0,rot_angle=0,a=0,b=0,mm=1,lfo2,mh=0;
-	var amp1,amp2,amp3,octave1=1,center=1800;////343speed of sound/1800hz= 0.1905 aproximate head diameter
+	var amp1,amp2,amp3,octave1=1,center=496;////343speed of sound/1800hz= 0.1905 aproximate head diameter
 	var osc4,osc5,osc6,osc7,osc8,osc9,amp4,amp5,amp6,amp7,amp8,amp9,lamdoma;
 	var pitch4,pitch5,pitch6,pitch7,pitch8,pitch9,dist,harm;
 	var ton1,ton2,ton3,fundamental,sph,sph8,per;
@@ -319,6 +313,7 @@ SynthDef.new(\ospace, {
 	//var out2 = NamedControl.kr(\out2, [0, 1, 2, 3]);
 	//var out3 = NamedControl.kr(\out3, [0, 1, 2, 3]);
 
+center=center*lfo2.reciprocal;
 
 	t=SinOsc.kr(ripple).range(1, 100);
 			waveFreq=amount;
@@ -330,12 +325,12 @@ SynthDef.new(\ospace, {
 q1=Quaternion(0,sph.x,sph.y,sph.z); q2=Quaternion(0,sph8.x,sph8.y,sph8.z);
 dist=q1.distance(q2);
 
-			env=EnvGen.ar(Env.perc(dist.lag(0.1)*0.01,decay,amp),doneAction:2,levelScale:0.005);
+			env=EnvGen.ar(Env.perc(dist.lag(0.1)*0.25,decay,amp),doneAction:2,levelScale:center.reciprocal);
 
-scale=57.collect{nn=nn+1;Scale.major.performDegreeToKey(nn,12)};
-scale1=29.collect{ns1=ns1+1;Scale.major.performDegreeToKey(ns1,12)};
-scale2=15.collect{ns2=ns2+1;Scale.major.performDegreeToKey(ns2,12)};
-scale_coo=29.collect{nnn=nnn+1;Scale.major.performDegreeToKey(nnn,12)};
+scale=57.collect{nn=nn+1;Scale.major.performDegreeToKey(nn,992)};
+scale1=29.collect{ns1=ns1+1;Scale.major.performDegreeToKey(ns1,992)};
+scale2=15.collect{ns2=ns2+1;Scale.major.performDegreeToKey(ns2,992)};
+scale_coo=29.collect{nnn=nnn+1;Scale.major.performDegreeToKey(nnn,992)};
 //scalar=2.pow(Select.kr(coo.round(1).linlin(14.neg, 14, 0, 28), scale_coo) / 12);
 scalar=1;lamdoma=mm;
 
@@ -379,7 +374,7 @@ cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spre
 						//phase=Complex(sph.theta.linlin(pi.neg,pi,1.neg,1),sph.phi.linlin((pi/2).neg,(pi/2),1.neg,1)).theta;
 			per=Spherical(360.degrad,sph.theta,sph.phi);
 			phase=(per.x+per.y+per.z).wrap(2pi.neg,2pi);
-				mod_angle2=LFNoise1.ar(lfo2).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
+				mod_angle2=SinOsc.ar(lfo2,mul:1,phase:phase).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 			//mod_angle2=LFNoise1.ar(lfo2).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 
 harm=((Complex(cos(((sph.phi+mod_angle2).round(0.00001)*mh).wrap((pi/2).neg,(pi/2))),cos(((sph.phi).round(0.00001)*mh).wrap((pi/2).neg,(pi/2)))).rho/(2.sqrt)).pow(spread));
@@ -396,15 +391,15 @@ ratio1=n1.round(1);ratio2=n2.round(1);ratio3=n3.round(1);
 ratio11=n11.round(1);ratio22=n22.round(1);ratio33=n33.round(1);
 ratio111=n111.round(1);ratio222=n222.round(1);ratio333=n333.round(1);
 
-ton1 = 2.pow(Select.kr(ratio1.linlin(28.neg, 28, 0, 56), scale) / 12);
-ton2 = 2.pow(Select.kr(ratio2.linlin(28.neg, 28, 0, 56), scale) / 12);
-ton3 = 2.pow(Select.kr(ratio3.linlin(28.neg, 28, 0, 56), scale) / 12);
-ton11 = 2.pow(Select.kr(ratio11.linlin(14.neg, 14, 0, 28), scale1) / 12);
-ton22 = 2.pow(Select.kr(ratio22.linlin(14.neg, 14, 0, 28), scale1) / 12);
-ton33 = 2.pow(Select.kr(ratio33.linlin(14.neg, 14, 0, 28), scale1) / 12);
-ton111 = 2.pow(Select.kr(ratio111.linlin(7.neg, 7, 0, 14), scale2) / 12);
-ton222 = 2.pow(Select.kr(ratio222.linlin(7.neg, 7, 0, 14), scale2) / 12);
-ton333 = 2.pow(Select.kr(ratio333.linlin(7.neg, 7, 0, 14), scale2) / 12);
+ton1 = 2.pow(Select.kr(ratio1.linlin(28.neg, 28, 0, 56), scale) / 992);
+ton2 = 2.pow(Select.kr(ratio2.linlin(28.neg, 28, 0, 56), scale) / 992);
+ton3 = 2.pow(Select.kr(ratio3.linlin(28.neg, 28, 0, 56), scale) / 992);
+ton11 = 2.pow(Select.kr(ratio11.linlin(14.neg, 14, 0, 28), scale1) / 992);
+ton22 = 2.pow(Select.kr(ratio22.linlin(14.neg, 14, 0, 28), scale1) / 992);
+ton33 = 2.pow(Select.kr(ratio33.linlin(14.neg, 14, 0, 28), scale1) / 992);
+ton111 = 2.pow(Select.kr(ratio111.linlin(7.neg, 7, 0, 14), scale2) / 992);
+ton222 = 2.pow(Select.kr(ratio222.linlin(7.neg, 7, 0, 14), scale2) / 992);
+ton333 = 2.pow(Select.kr(ratio333.linlin(7.neg, 7, 0, 14), scale2) / 992);
 //ton1 = 2.pow(n1 / 12);
 //ton2 = 2.pow(n2 / 12);
 //ton3 = 2.pow(n3 / 12);
@@ -503,7 +498,7 @@ Out.ar(0,LeakDC.ar(osc9,mul:env));
 			\pl1,Pseq(~list1,inf),    ///////coordinate selection
 			\pl2,Pseq(~list1,inf),
 		\lfo,Prand([0.001,0.0001,0.001,0.0001,0.001,0.0001,0.01],inf), /////mag spherical harmonic oscillation
-		\lfo2,Pexprand(1,6,inf), /////tone spherical harmonic oscillation
+		\lfo2,Pexprand(1,2,inf), /////tone spherical harmonic oscillation
 			\cell,Prand([0.001,0.0001,0.001,0.0001,0.001,0.0001,0.01],inf), ///////speed of 4dimensional oscillation
 		\rot_angle,Pseq(~angle,inf),
 		//\lfo,1/2,
@@ -514,15 +509,16 @@ Out.ar(0,LeakDC.ar(osc9,mul:env));
 		//\amount,Prand([4,5,6,7,8],inf),   /////sphere ripple waves amount
 		\amount,7,
 		\varamp,Pbrown(1,4,0.1,inf), /////ripple amp
-		\decay,Pbrown(8,16,1,inf),
+		\decay,Pbrown(2,8,1/8,inf),
 		//\varamp,1,
 			//	\out1,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//\out2,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		//\out3,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\amp,Pseq(~r,inf);///l system
-	//		\amp,1;
+	\amp,Pseq(~r*10,inf);///l system
+	//	\amp,10;
 	)));
-	TempoClock.default.tempo_(3);
+	TempoClock.default.tempo_(6)
+	);
 
 
 

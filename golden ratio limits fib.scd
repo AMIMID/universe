@@ -26,3 +26,10 @@ var angle=0;
 
 for cycle division of 89 degrees
 360-(360/(89/55))
+////////////////////////////////////////////////////////////////////weight tensor
+
+
+(
+var angle=0;
+2.do{	angle=(angle+(360-(360/(2/1)))).wrap(0,360); angle.postln;}
+)
