@@ -79,7 +79,7 @@ var ot=0.degrad,mk=0,size=20000;
 
 1.do{
 
-data = (89*5*8).collect{
+data = (610*5).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
@@ -119,13 +119,12 @@ Pen.translate(400,400);
 { while { run } {~v.background_(Color.black); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 )
 
-
+2.414213562373
 /////////////
 (
 {
 var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=0,m_y=0,m_z=0,qx,qy,mq=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z,mag_qx,mag_qy;
-var az11=0,el11=0,az22=0,el22=0,az33=0,el33=0,az44=0,el44=0,az55=0,el55=0,az66=0,el66=0,az77=0,el77=0;
 var az4=0,el4=0,az5=0,el5=0,az6=0,el6=0,az7=0,el7=0;
 var azimuth,elevation,magnitudex,magnitudey,magnitudez;
 var durx,dury,durz,angle=0,n=12;
@@ -137,26 +136,21 @@ var mag1=1,mag2=1,mag3=1,mag4=1,mag5=1,mag6=1,mag7=1;
 
 //	spread = if(m_z < 1) { 1 / m_z } { m_z };
 
-	89.do{
-
-5.do{
+	610.do{
+azimuth=5.collect{
 			az1 = (az1+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 				el1 = (el1+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(180*2.pow(n/12)));
-sph1=Spherical(mag1,(az1.degrad+angle.degrad).wrap(pi.neg,pi),(el1.degrad+angle.degrad).wrap((pi/2).neg,(pi/2)));
 
-	azimuth=8.collect{
-				az11=az1;el11=el1;
-				az11 = (az11+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
-				el11 = (el11+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(180*2.pow(n/12)));
-				sph2=Spherical(mag1/100,az11,el11);
-				(sph1.asCartesian-sph2.asCartesian).asSpherical.theta.round(0.000000000001);
-			};
+//	mag1=(mag1+(1-(1/1.6180339887499))).wrap(0,1);
+sph1=(Spherical(mag1,(az1.degrad+angle.degrad).wrap(pi.neg,pi),(el1.degrad+angle.degrad).wrap((pi/2).neg,(pi/2)))).theta.round(0.000000000001);
 
 	};
 
 elevation=5.collect{
 				az2 = (az2+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 			el2 = (el2+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+	//mag2=(mag2+(1-(1/1.6180339887499))).wrap(0,1);
 		sph2=(Spherical(mag2,(az2.degrad+angle.degrad).wrap(pi.neg,pi),(el2.degrad+angle.degrad).wrap((pi/2).neg,(pi/2)))).phi.round(0.000000000001);
 
 	};
@@ -164,6 +158,8 @@ elevation=5.collect{
 magnitudex=	5.collect{
 			az3 = (az3+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 			el3 = (el3+((90*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+	//mag3=(mag3+(1-(1/1.6180339887499))).wrap(0,1);
 	sph3=(Spherical(mag3,(az3.degrad+angle.degrad).wrap(pi.neg,pi),(el3.degrad+angle.degrad).wrap((pi/2).neg,(pi/2))));
 
 	 mag_x=((Complex(cos((sph3.theta.round(0.000000000001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.000000000001)*m_x).wrap(pi.neg,pi))).rho/(2.sqrt)).pow(spread)*
@@ -174,6 +170,8 @@ magnitudex=	5.collect{
 magnitudey=	5.collect{
 			az4 = (az4+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 				el4 = (el4+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+	//mag4=(mag4+(1-(1/1.6180339887499))).wrap(0,1);
 	sph4=(Spherical(mag4,(az4.degrad+angle.degrad).wrap(pi.neg,pi),(el4.degrad+angle.degrad).wrap((pi/2).neg,(pi/2))));
 
 		 mag_y=((Complex(sin((sph4.theta.round(0.000000000001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.000000000001)*m_y).wrap(pi.neg,pi))).rho/(2.sqrt)).pow(spread)*
@@ -184,6 +182,8 @@ magnitudey=	5.collect{
 qx=	5.collect{
 			az5 = (az5+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 			el5 = (el5+((90*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+		//mag5=(mag5+(1-(1/1.6180339887499))).wrap(0,1);
 	sph5=(Spherical(mag5,(az5.degrad+angle.degrad).wrap(pi.neg,pi),(el5.degrad+angle.degrad).wrap((pi/2).neg,(pi/2))));
 
 
@@ -199,6 +199,8 @@ cos((sph5.phi.round(0.000000000001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).
 qy=	5.collect{
 			az6 = (az6+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 			el6 = (el6+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+	//mag6=(mag6+(1-(1/1.6180339887499))).wrap(0,1);
 	sph6=(Spherical(mag6,(az6.degrad+angle.degrad).wrap(pi.neg,pi),(el6.degrad+angle.degrad).wrap((pi/2).neg,(pi/2))));
 
  mag_qy=((((Complex(sin(((sph6.theta.round(0.000000000001))*mq).wrap(pi.neg,pi)),
@@ -213,6 +215,8 @@ cos((sph6.phi.round(0.000000000001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).
 magnitudez=	5.collect{
 			az7 = (az7+((180*2.pow(n/12))-((180*2.pow(n/12))/1.6180339887499))).wrap((180*2.pow(n/12)).neg,(180*2.pow(n/12)));
 			el7 = (el7+((90*2.pow(n/12))-((90*2.pow(n/12))/1.6180339887499))).wrap((90*2.pow(n/12)).neg,(90*2.pow(n/12)));
+
+//mag7=(mag7+(1-(1/1.6180339887499))).wrap(0,1);
 sph7=(Spherical(mag7,(az7.degrad+angle.degrad).wrap(pi.neg,pi),(el7.degrad+angle.degrad).wrap((pi/2).neg,(pi/2))));
 
 //if(
