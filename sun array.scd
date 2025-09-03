@@ -89,8 +89,8 @@ data = (144*13).collect{
 		// mag=~magz.[pl];
 	pl=pl+1;
 			//mk=(mk+((size*2.pow(n/12))-((size*2.pow(n/12))/1.6180339887499))).wrap(0,size*2.pow(n/12));
-		mk=(mk+1).wrap(1,1000);
-		sph=Spherical(mag*1000,az,el).asCartesian.asArray;
+		mk=(mk+250).wrap(1,1000);
+		sph=Spherical(mag*mk,az,el).asCartesian.asArray;
 };
 	//pl=0;
 	//mk=(mk+(1200-(1200/1.6180339887499))).wrap(0,1200);
