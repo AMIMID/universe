@@ -119,11 +119,12 @@ Pen.translate(400,400);
 { while { run } {~v.background_(Color.black); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 )
 
+
 2.414213562373
 /////////////
 (
 {
-var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=2,m_y=2,m_z=2,qx,qy,mq=2;
+var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=0,m_y=0,m_z=0,qx,qy,mq=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z,mag_qx,mag_qy;
 var az4=0,el4=0,az5=0,el5=0,az6=0,el6=0,az7=0,el7=0;
 var azimuth,elevation,magnitudex,magnitudey,magnitudez,angle=0,n=12;
