@@ -33,3 +33,21 @@ for cycle division of 89 degrees
 var angle=0;
 2.do{	angle=(angle+(360-(360/(2/1)))).wrap(0,360); angle.postln;}
 )
+
+
+
+
+//////////proximity
+
+(Spherical(1,0.degrad,90.degrad).asCartesian.round(0.0001)+Spherical(10,45.degrad,0.degrad).asCartesian.round(0.0001)).asSpherical
+
+////transfer center
+(
+var center, vektor, new_vektor;
+
+vektor=Spherical(100,0,0.degrad).asCartesian;
+center=Spherical(100,0.degrad,0.degrad).asCartesian;
+new_vektor= vektor+center;
+new_vektor.asSpherical.postln;
+
+)
