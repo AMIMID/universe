@@ -74,7 +74,7 @@ var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
 var run = true,n=12;
-var ot=0.degrad,mk=0,size=700;
+var ot=0.degrad,mk=0,size=200;
 ~data=[];
 
 1.do{
@@ -82,10 +82,10 @@ var ot=0.degrad,mk=0,size=700;
 data = (144*13).collect{
 
 	az=~az.[pl];
-	el=~el.[pl].wrap(1.neg.degrad,1.degrad);
+	el=~el.[pl].wrap(15.neg.degrad,15.degrad);
 	//mag=1000;
-	// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
-				 mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt));
+	 mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt))+(Cartesian(~qx.[pl],~qy.[pl],~magz.[pl]).rho/(2.sqrt));
+				// mag=(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt));
 		// mag=~magz.[pl];
 	pl=pl+1;
 			mk=(mk+((size*2.pow(n/12))-((size*2.pow(n/12))/1.6180339887499))).wrap(0,size*2.pow(n/12));
@@ -124,7 +124,7 @@ Pen.translate(400,400);
 /////////////
 (
 {
-var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=1,m_y=1,m_z=1,qx,qy,mq=2;
+var  sph1,sph2,sph3,sph4,sph5,sph6,sph7,m_x=1,m_y=1,m_z=1,qx,qy,mq=0;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z,mag_qx,mag_qy;
 var az4=0,el4=0,az5=0,el5=0,az6=0,el6=0,az7=0,el7=0;
 var azimuth,elevation,magnitudex,magnitudey,magnitudez,angle=0,n=12,n1=12;
