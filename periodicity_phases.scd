@@ -373,7 +373,7 @@ cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spre
 
 						//phase=Complex(sph.theta.linlin(pi.neg,pi,1.neg,1),sph.phi.linlin((pi/2).neg,(pi/2),1.neg,1)).theta;
 			per=Spherical(360.degrad,sph.theta,sph.phi);
-			phase=(per.x+per.y+per.z).wrap(2pi.neg,2pi);
+			phase=(per.x+per.y+per.z).wrap(2pi.neg,2pi);//////////////////!!!!!!!
 				mod_angle2=SinOsc.ar(lfo2,mul:1,phase:phase).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 			//mod_angle2=LFNoise1.ar(lfo2).range(90.neg.degrad,90.degrad);///harm oscillator phase can vary across tones
 
