@@ -34,16 +34,38 @@ x.set(\gate, 0);  // release
 
 ////lamdoma relation y=(x+1)/x between am modulator and carrier freq
 
-{Out.ar(0,Saw.ar(3*64).abs+SinOsc.ar(2*64))}.play;
+{Out.ar(0,Saw.ar(6*64).abs+SinOsc.ar(5*64))}.play;
 
 
 
 ({Out.ar(1,
-	LFTri.ar(6*64))}.play;
+	LFTri.ar(3*32))}.play;
 {Out.ar(1,
-	SinOsc.ar(5*64))}.play
+	SinOsc.ar(4*32,mul:1))}.play
 )
 
+//////////////////////////////////
+
+{Out.ar(0,SinOsc.ar(2*32)+Saw.ar(3*32).abs)}.play;
+
+{Out.ar(0,(SinOsc.ar(3*32*1,mul:1)+SinOsc.ar(3*32*2,1,mul:1/2)+SinOsc.ar(3*32*3,1,mul:1/3))+Saw.ar(4*32).abs)}.play;
+
+(
+	{Out.ar(0,Saw.ar(4*64).abs)}.play;
+
+{Out.ar(0,SinOsc.ar((3*64)*1,mul:1/1))}.play;
+//{Out.ar(0,SinOsc.ar((3*64)*2,mul:1/2))}.play;
+//{Out.ar(0,SinOsc.ar((3*64)*3,mul:1/3))}.play;
+
+);
 
 
+(
+	{Out.ar(1,LFTri.ar(4*64))}.play;
+
+{Out.ar(1,SinOsc.ar((3*64)*1,mul:1/1))}.play;
+//{Out.ar(1,SinOsc.ar((3*64)*2,mul:1/2))}.play;
+//{Out.ar(1,SinOsc.ar((3*64)*3,mul:1/3))}.play;
+
+)
 
