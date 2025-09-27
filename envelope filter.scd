@@ -26,3 +26,24 @@ SynthDef(\envFilter, {
 // Example: play it
 x = Synth(\envFilter);
 x.set(\gate, 0);  // release
+
+
+
+
+
+
+////lamdoma relation y=(x+1)/x between am modulator and carrier freq
+
+{Out.ar(0,Saw.ar(3*64).abs+SinOsc.ar(2*64))}.play;
+
+
+
+({Out.ar(1,
+	LFTri.ar(6*64))}.play;
+{Out.ar(1,
+	SinOsc.ar(5*64))}.play
+)
+
+
+
+
