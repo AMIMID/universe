@@ -46,7 +46,10 @@ x.set(\gate, 0);  // release
 
 //////////////////////////////////
 
-{Out.ar(0,SinOsc.ar(2*32)+Saw.ar(3*32).abs)}.play;
+{Out.ar(0,(SinOsc.ar(3*64)+Saw.ar(64*4).abs)*0.1)}.play;
+{Out.ar(0,(SinOsc.ar(32*3)+LFTri.ar(32*4))*0.1)}.play;
+
+/////////////////////////
 
 {Out.ar(0,(SinOsc.ar(3*32*1,mul:1)+SinOsc.ar(3*32*2,1,mul:1/2)+SinOsc.ar(3*32*3,1,mul:1/3))+Saw.ar(4*32).abs)}.play;
 
@@ -60,12 +63,6 @@ x.set(\gate, 0);  // release
 );
 
 
-(
-	{Out.ar(1,LFTri.ar(4*64))}.play;
 
-{Out.ar(1,SinOsc.ar((3*64)*1,mul:1/1))}.play;
-//{Out.ar(1,SinOsc.ar((3*64)*2,mul:1/2))}.play;
-//{Out.ar(1,SinOsc.ar((3*64)*3,mul:1/3))}.play;
 
-)
 

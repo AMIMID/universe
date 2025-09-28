@@ -25,6 +25,7 @@ var freq= 100;
 
 (
 var freq= 110;
-{LPF.ar(Pulse.ar(freq*128,width:0.1)*SinOsc.ar(freq/2,mul:1),freq*16,20)}.play;
+{LPF.ar(Pulse.ar(freq*32,width:0.5).abs*SinOsc.ar(freq,mul:1),freq*16)*0.5}.play;
 )
-	
+
+
