@@ -11,7 +11,7 @@ files include:
 -relevant sources and ideas.
 -notes for code.
 -notes for installation, setup and equipment.
--array indormation for cosmic spherical objects and harmonics.
+-array indormation for cosmic spherical objects and harmonics (Ambisonics, Bessel etc.).
 -composition files for Synthdef and control methods.
 -sculptor which is the code bundle for additioin with external synths.
 -midiout.
