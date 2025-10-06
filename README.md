@@ -3,11 +3,16 @@ utilizing harmonics, sound art, control randomness, music theory, spatial sound 
 cubic or 12 channel sound installations,or as a drone with parallel Midiout and AM/FM with the addition of external synths 
 like the Vermona Perfourmer or other Behringer modules and sequencers, for drum and bass generative techno setups.
 Enjoy#
+/////
 
 
-
+/////
 files include:
-notes for code
-notes for installation, setup and equipment
-array indormation for cosmic spherical objects and harmonics
-composition files for Synthdef and control methods
+-notes for code.
+-notes for installation, setup and equipment.
+-array indormation for cosmic spherical objects and harmonics.
+-composition files for Synthdef and control methods.
+-sculptor which is the code bundle for additioin with external synths.
+-midiout.
+-animation and digital image.
+//////
