@@ -61,3 +61,9 @@ y=(x+a)/x;
 y.postln;
 )
 
+(
+var x=8,a=7;
+{Out.ar(0,SinOsc.ar(28*(x+a),mul:(x+a).reciprocal)*1)}.play;
+{Out.ar(0,SinOsc.ar(28*(x),mul:(x).reciprocal)*1)}.play;
+)
+
