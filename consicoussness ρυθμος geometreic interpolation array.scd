@@ -119,3 +119,29 @@ Pen.translate(400,400);
 ~el3=[35.264390.neg.degrad,35.264390.neg.degrad,35.264390.degrad,35.264390.degrad];
 
 )
+
+
+
+
+//////rhythm tests
+
+(
+SynthDef.new(\R, {
+
+
+}).add;
+)
+
+//////////pattern
+
+	(
+		~r=Pdef(\1, Pbind(\instrument, \R,
+			\dur,Pseq(~dur,inf),
+
+	)));
+
+
+TempoClock.default.tempo_(1);
+
+
+~aa.play;
