@@ -119,7 +119,7 @@ var ot=0.degrad,mk=0,size=2.sqrt+100;
 
 data = (6).collect{
 
-	az=~az1.[pl2];
+	az=~az2.[pl2];
 	el=~el2.[pl2];
 
 	pl2=pl2+1;
@@ -155,7 +155,7 @@ Pen.translate(400,400);
 (
 
 ~az1=[45.degrad,135.degrad,45.neg.degrad,135.neg.degrad,45.degrad,135.degrad,45.neg.degrad,135.neg.degrad];
-~el1=[35.26.neg.degrad,35.26.neg.degrad,35.26.neg.degrad,35.26.neg.degrad,35.26.degrad,35.26.degrad,35.26.degrad,35.26.degrad];
+~el1=[35.264390.neg.degrad,35.264390.neg.degrad,35.264390.neg.degrad,35.264390.neg.degrad,35.264390.degrad,35.264390.degrad,35.264390.degrad,35.264390.degrad];
 
 )
 
