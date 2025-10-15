@@ -5,10 +5,10 @@ var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r=1.neg;
 var r1,harm1,r2,harm2,rad,call,mk=50,size=200;
 
 
-data = 12.collect{
+data = 30.collect{
 
-	az=~az4.[pl];
-	el=~el4.[pl];
+	az=~az6.[pl];
+	el=~el6.[pl];
 
 	pl=pl+1;
 
@@ -35,7 +35,7 @@ data = 12.collect{
 w = Window.new("3D Scatterplot", Rect(40,40, 1000, 800)).front;
 a = ScatterView3d(w, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
 a.drawMethod = \fillRect;
-a.symbolSize = 10;
+a.symbolSize = 3;
 a.symbolColor = Color.white;
 a.background = Color.black;
 
@@ -235,6 +235,7 @@ data = (32).collect{
 	pl5=pl5+1;
 
 		sph=Spherical(1000,az,el).asCartesian.asArray;
+
 };
 
 w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
@@ -258,6 +259,7 @@ Pen.translate(400,400);
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 )
+
 (
 var data;
 var az=0,el=0;
@@ -340,14 +342,23 @@ Pen.translate(400,400);
 
 ///////////////Rhombic Triacontahedron//// hull
 (
-~az5=[];
-~el5=[];
+~az5=[0.degrad,0.degrad,72.degrad,144.degrad,144.neg.degrad,72.neg.degrad,36.degrad,108.degrad,180.degrad,108.neg.degrad,36.neg.degrad,
+	0.degrad,72.degrad,144.degrad,144.neg.degrad,72.neg.degrad,36.degrad,108.degrad,180.degrad,108.neg.degrad,36.neg.degrad,
+	0.degrad,72.degrad,144.degrad,144.neg.degrad,72.neg.degrad,36.degrad,108.degrad,180.degrad,108.neg.degrad,36.neg.degrad,0.degrad];
+
+~el5=[90.neg.degrad,52.6.neg.degrad,52.6.neg.degrad,52.6.neg.degrad,52.6.neg.degrad,52.6.neg.degrad,26.6.neg.degrad,26.6.neg.degrad,26.6.neg.degrad,26.6.neg.degrad,26.6.neg.degrad,10.8.neg.degrad,10.8.neg.degrad,10.8.neg.degrad,10.8.neg.degrad,10.8.neg.degrad,52.6.degrad,52.6.degrad,52.6.degrad,52.6.degrad,52.6.degrad,26.6.degrad,26.6.degrad,26.6.degrad,26.6.degrad,26.6.degrad,10.8.degrad,10.8.degrad,10.8.degrad,10.8.degrad,10.8.degrad,90.degrad];
 
 )
+~az5.[32].raddeg
+~el5.[32].raddeg
 
 ///////icosidodecahedron//// core
 (
-~az6=[];
-~el6=[];
+~az6=[18.degrad,90.degrad,162.degrad,126.neg.degrad,54.neg.degrad,54.degrad,126.degrad,162.neg.degrad,90.neg.degrad,18.neg.degrad,
+	0.degrad,36.degrad,72.degrad,108.degrad,144.degrad,180.degrad,144.neg.degrad,108.neg.degrad,72.neg.degrad,36.neg.degrad,
+	54.degrad,126.degrad,162.neg.degrad,90.neg.degrad,18.neg.degrad,18.degrad,90.degrad,162.degrad,126.neg.degrad,54.neg.degrad];
+
+~el6=[58.283.degrad,58.283.degrad,58.283.degrad,58.283.degrad,58.283.degrad,58.283.neg.degrad,58.283.neg.degrad,58.283.neg.degrad,58.283.neg.degrad,58.283.neg.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,0.degrad,
+37.717.degrad,37.717.degrad,37.717.degrad,37.717.degrad,37.717.degrad,37.717.neg.degrad,37.717.neg.degrad,37.717.neg.degrad,37.717.neg.degrad,37.717.neg.degrad];
 
 )
