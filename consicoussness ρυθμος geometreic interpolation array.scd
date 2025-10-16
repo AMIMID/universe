@@ -135,13 +135,13 @@ var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
 
 ~x=3.collect{
 	plx=plx=1;
-	Spherical(1,~az3[pl],~el3[pl]).x;	};
+	Spherical(1,~az3[plx],~el3[plx]).x;	};
 ~y=3.collect{
 	ply=ply=1;
-	Spherical(1,~az3[pl],~el3[pl]).y;	};
+	Spherical(1,~az3[ply],~el3[ply]).y;	};
 ~z=3.collect{
 	plz=plz=1;
-	Spherical(1,~az3[pl],~el3[pl]).z;	};
+	Spherical(1,~az3[plz],~el3[plz]).z;	};
 
 3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
 
@@ -150,19 +150,22 @@ var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
 
 /////quaternion 4/4 rhythm τετράεδρο μέτρο
 (
-var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
+var pl=0,plq=1.neg,pli=1.neg,plj=1.neg,plk=1.neg;~dur=[];
 
-~x=3.collect{
-	plx=plx=1;
-	Spherical(1,~az3[pl],~el3[pl]).x;	};
-~y=3.collect{
-	ply=ply=1;
-	Spherical(1,~az3[pl],~el3[pl]).y;	};
-~z=3.collect{
-	plz=plz=1;
-	Spherical(1,~az3[pl],~el3[pl]).z;	};
+~q=3.collect{
+	plq=plq=1;
+	Spherical(1,~az3[plq],~el3[plq]).asQuaternion.a;	};
+~i=3.collect{
+	pli=pli=1;
+	Spherical(1,~az3[pli],~el3[pli]).y;	};
+~j=3.collect{
+	plj=plj=1;
+	Spherical(1,~az3[plj],~el3[plj]).z;	};
+~k=3.collect{
+	plk=plk=1;
+	Spherical(1,~az3[plk],~el3[plk]).y;	};
 
-3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
+3.do{ ~dur=~dur++~q.[pl]++~i.[pl]++~j.[pl]++~k.[pl]; pl=pl+1;};
 
 ~dur=~dur.abs
 )
