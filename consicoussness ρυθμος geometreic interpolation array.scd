@@ -125,9 +125,55 @@ Pen.translate(400,400);
 
 //////rhythm tests
 
+////Τετραεδρο ως control array του Ρυθμού. Μέτρο xyz. Με εναλλαγές στους χρόνους λόγο περιστροφής τετραεδρου σε γεοδεσικο πλαίσιο.
+///Test models of rhythm (synthdef pattern)
+///In control array rhytm file.  eg Cartsian tetrahedron xyz is 3/4 σε 4 μέτρα {χωρίς περιστροφή, μισή περίοδος (ολόκληρη περίοδος είναι δύο μέτρα)}, τετραδονιο τετραεδρο qxyz είναι 4/4 σε 4 μέτρα.
+
+//////cartesian 3/4 rhythm τετράεδρο μέτρο
+(
+var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
+
+~x=3.collect{
+	plx=plx=1;
+	Spherical(1,~az3[pl],~el3[pl]).x;	};
+~y=3.collect{
+	ply=ply=1;
+	Spherical(1,~az3[pl],~el3[pl]).y;	};
+~z=3.collect{
+	plz=plz=1;
+	Spherical(1,~az3[pl],~el3[pl]).z;	};
+
+3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
+
+~dur=~dur.abs
+)
+
+/////quaternion 4/4 rhythm τετράεδρο μέτρο
+(
+var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
+
+~x=3.collect{
+	plx=plx=1;
+	Spherical(1,~az3[pl],~el3[pl]).x;	};
+~y=3.collect{
+	ply=ply=1;
+	Spherical(1,~az3[pl],~el3[pl]).y;	};
+~z=3.collect{
+	plz=plz=1;
+	Spherical(1,~az3[pl],~el3[pl]).z;	};
+
+3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
+
+~dur=~dur.abs
+)
+
 (
 SynthDef.new(\R, {
+var env,sig;
 
+	env=EnvGen.ar(Env.perc(0.01,1,0.1));
+		sig=Saw.ar(440,env);
+	Out.ar([0,1],sig);
 
 }).add;
 )
@@ -135,13 +181,12 @@ SynthDef.new(\R, {
 //////////pattern
 
 	(
-		~r=Pdef(\1, Pbind(\instrument, \R,
-			\dur,Pseq(~dur,inf),
-
-	)));
+		~rh=Pdef(\1, Pbind(\instrument, \R,
+			\dur,Pseq(~dur,inf)))
+)
 
 
 TempoClock.default.tempo_(1);
 
 
-~aa.play;
+~rh.play;
