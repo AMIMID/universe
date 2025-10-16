@@ -135,13 +135,13 @@ var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
 
 ~x=3.collect{
 	plx=plx=1;
-	Spherical(1,~az3[plx],~el3[plx]).x;	};
+	Spherical(1,~az3[plx],~el3[plx]).rotate(90).x;	};
 ~y=3.collect{
 	ply=ply=1;
-	Spherical(1,~az3[ply],~el3[ply]).y;	};
+	Spherical(1,~az3[ply],~el3[ply]).rotate(90).y;	};
 ~z=3.collect{
 	plz=plz=1;
-	Spherical(1,~az3[plz],~el3[plz]).z;	};
+	Spherical(1,~az3[plz],~el3[plz]).rotate(90).z;	};
 
 3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
 
@@ -218,7 +218,7 @@ var env,sig;
 )
 
 
-TempoClock.default.tempo_(1);
+TempoClock.default.tempo_(2);
 
 
 ~rh.play;
