@@ -81,8 +81,8 @@ var ot=0.degrad,mk=0,size=2.sqrt+100;
 
 data = (4).collect{
 
-	az=~az3.[pl2];
-	el=~el3.[pl2];
+	az=~az.[pl2];
+	el=~el.[pl2];
 
 	pl2=pl2+1;
 
@@ -115,8 +115,8 @@ Pen.translate(400,400);
 /////tetrahedron
 
 (
-~az3=[45.degrad,135.neg.degrad,45.neg.degrad,135.degrad];
-~el3=[35.264390.neg.degrad,35.264390.neg.degrad,35.264390.degrad,35.264390.degrad];
+~az=[45.degrad,135.neg.degrad,45.neg.degrad,135.degrad];
+~el=[35.264390.neg.degrad,35.264390.neg.degrad,35.264390.degrad,35.264390.degrad];
 
 )
 
@@ -131,23 +131,22 @@ Pen.translate(400,400);
 (
 var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
 
-~x=3.collect{
+~x=4.collect{
 	plx=plx=1;
-	Spherical(1,~az3[plx],~el3[plx]).rotate(90).x.round(0.001);	};
-~y=3.collect{
+	Spherical(1,~az[plx],~el[plx]).rotate(0).x.round(0.001);	};
+~y=4.collect{
 	ply=ply=1;
-	Spherical(1,~az3[ply],~el3[ply]).rotate(90).y.round(0.001);	};
-~z=3.collect{
+	Spherical(1,~az[ply],~el[ply]).rotate(0).y.round(0.001);	};
+~z=4.collect{
 	plz=plz=1;
-	Spherical(1,~az3[plz],~el3[plz]).rotate(90).z.round(0.001);	};
+	Spherical(1,~az[plz],~el[plz]).rotate(0).z.round(0.001);	};
 
-3.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
+4.do{ ~dur=~dur++~x.[pl]++~y.[pl]++~z.[pl]; pl=pl+1;};
 
 ~dur=~dur.abs
 )
 
 /////quaternion 4/4 rhythm τετράεδρο μέτρο
-
 
 //////////////////////with angle as argument, (along with Quaternion file
 	//axis=i+j+k;
@@ -161,26 +160,26 @@ dist=q1.distance(q2);
 dist.postln;)*/
 
 (
-var pl=0,plq=1.neg,pli=1.neg,plj=1.neg,plk=1.neg,i,j,k,axis,r,angle=30; ~dur=[];
+var pl=0,plq=1.neg,pli=1.neg,plj=1.neg,plk=1.neg,i,j,k,axis,r,angle=72; ~dur=[];
 
-axis=[0,1,1].normalizeSum.sqrt;
+axis=[1,1,1].normalizeSum.sqrt;
 i=Quaternion(0, axis.[0], 0, 0);
 j=Quaternion(0, 0, axis.[1], 0);
 k=Quaternion(0, 0, 0, axis.[2]);
 r=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 
-~q=3.collect{
+~q=4.collect{
 	plq=plq=1;
-	(r*Quaternion(1,Spherical(1,~az3[plq],~el3[plq]).x,Spherical(1,~az3[plq],~el3[plq]).y,Spherical(1,~az3[plq],~el3[plq]).z)*r.conjugate).a.round(0.001);	};
-~i=3.collect{
+	(r*Quaternion(0,Spherical(1,~az[plq],~el[plq]).x,Spherical(1,~az[plq],~el[plq]).y,Spherical(1,~az[plq],~el[plq]).z)).a.round(0.001);	};
+~i=4.collect{
 	pli=pli=1;
-	(r*Quaternion(1,Spherical(1,~az3[pli],~el3[pli]).x,Spherical(1,~az3[pli],~el3[pli]).y,Spherical(1,~az3[pli],~el3[pli]).z)*r.conjugate).b.round(0.001);	};
-~j=3.collect{
+	(r*Quaternion(0,Spherical(1,~az[pli],~el[pli]).x,Spherical(1,~az[pli],~el[pli]).y,Spherical(1,~az[pli],~el[pli]).z)).b.round(0.001);	};
+~j=4.collect{
 	plj=plj=1;
-	(r*Quaternion(1,Spherical(1,~az3[plj],~el3[plj]).x,Spherical(1,~az3[plj],~el3[plj]).y,Spherical(1,~az3[plj],~el3[plj]).z)*r.conjugate).c.round(0.001);	};
-~k=3.collect{
+	(r*Quaternion(0,Spherical(1,~az[plj],~el[plj]).x,Spherical(1,~az[plj],~el[plj]).y,Spherical(1,~az[plj],~el[plj]).z)).c.round(0.001);	};
+~k=4.collect{
 	plk=plk=1;
-	(r*Quaternion(1,Spherical(1,~az3[plk],~el3[plk]).x,Spherical(1,~az3[plk],~el3[plk]).y,Spherical(1,~az3[plk],~el3[plk]).z)*r.conjugate).d.round(0.001);	};
+	(r*Quaternion(0,Spherical(1,~az[plk],~el[plk]).x,Spherical(1,~az[plk],~el[plk]).y,Spherical(1,~az[plk],~el[plk]).z)).d.round(0.001);	};
 
 3.do{ ~dur=~dur++~q.[pl]++~i.[pl]++~j.[pl]++~k.[pl]; pl=pl+1;};
 
@@ -191,7 +190,7 @@ r=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 SynthDef.new(\R, {
 var env,sig;
 
-	env=EnvGen.ar(Env.perc(0.01,0.5,0.5));
+	env=EnvGen.ar(Env.perc(0.01,0.5,0.15));
 		sig=Saw.ar(440,env);
 	Out.ar([0,1],sig);
 
@@ -206,35 +205,36 @@ var env,sig;
 )
 
 
-TempoClock.default.tempo_(2);
+TempoClock.default.tempo_(1/2);
 
 
 ~rh.play;
 
 ///8metra xyz rh
 (
-var pl=0,plx1=1.neg,ply1=1.neg,plz1=1.neg,plx2=1.neg,ply2=1.neg,plz2=1.neg;~dur=[];
+var plm1=0,plm2=0,plx1=1.neg,ply1=1.neg,plz1=1.neg,plx2=1.neg,ply2=1.neg,plz2=1.neg;~dur=[];
 
-~x1=3.collect{
+~x1=4.collect{
 	plx1=plx1=1;
-	Spherical(1,~az3[plx1],~el3[plx1]).rotate(0).x.round(0.001);	};
+	Spherical(1,~az[plx1],~el[plx1]).rotate(0).x.round(0.001);	};
 ~y1=3.collect{
 	ply1=ply1=1;
-	Spherical(1,~az3[ply1],~el3[ply1]).rotate(0).y.round(0.001);	};
-~z1=3.collect{
+	Spherical(1,~az[ply1],~el[ply1]).rotate(0).y.round(0.001);	};
+~z1=4.collect{
 	plz1=plz1=1;
-	Spherical(1,~az3[plz1],~el3[plz1]).rotate(0).z.round(0.001);	};
-~x2=3.collect{
+	Spherical(1,~az[plz1],~el[plz1]).rotate(0).z.round(0.001);	};
+~x2=4.collect{
 	plx2=plx2=1;
-	Spherical(1,~az3[plx2],~el3[plx2]).rotate(90).x.round(0.001);	};
-~y2=3.collect{
+	Spherical(1,~az[plx2],~el[plx2]).rotate(90).x.round(0.001);	};
+~y2=4.collect{
 	ply2=ply2=1;
-	Spherical(1,~az3[ply2],~el3[ply2]).rotate(90).y.round(0.001);	};
-~z2=3.collect{
+	Spherical(1,~az[ply2],~el[ply2]).rotate(90).y.round(0.001);	};
+~z2=4.collect{
 	plz2=plz2=1;
-	Spherical(1,~az3[plz2],~el3[plz2]).rotate(90).z.round(0.001);	};
+	Spherical(1,~az[plz2],~el[plz2]).rotate(90).z.round(0.001);	};
 
-3.do{ ~dur=~dur++~x1.[pl]++~y1.[pl]++~z1.[pl]++~x2.[pl]++~y2.[pl]++~z2.[pl]; pl=pl+1;};
+4.do{ ~dur=~dur++~x1.[plm1]++~y1.[plm1]++~z1.[plm1]; plm1=plm1+1;};
+4.do{ ~dur=~dur++~x2.[plm2]++~y2.[plm2]++~z2.[plm2]; plm2=plm2+1;};
 
 ~dur=~dur.abs
 )
