@@ -121,8 +121,6 @@ Pen.translate(400,400);
 )
 
 
-
-
 //////rhythm tests
 
 ////Τετραεδρο ως control array του Ρυθμού. Μέτρο xyz. Με εναλλαγές στους χρόνους λόγο περιστροφής τετραεδρου σε γεοδεσικο πλαίσιο.
@@ -193,7 +191,7 @@ r=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
 SynthDef.new(\R, {
 var env,sig;
 
-	env=EnvGen.ar(Env.perc(0.01,1,0.1));
+	env=EnvGen.ar(Env.perc(0.01,0.5,0.5));
 		sig=Saw.ar(440,env);
 	Out.ar([0,1],sig);
 
@@ -208,7 +206,35 @@ var env,sig;
 )
 
 
-TempoClock.default.tempo_(1);
+TempoClock.default.tempo_(2);
 
 
 ~rh.play;
+
+///8metra xyz rh
+(
+var pl=0,plx1=1.neg,ply1=1.neg,plz1=1.neg,plx2=1.neg,ply2=1.neg,plz2=1.neg;~dur=[];
+
+~x1=3.collect{
+	plx1=plx1=1;
+	Spherical(1,~az3[plx1],~el3[plx1]).rotate(0).x.round(0.001);	};
+~y1=3.collect{
+	ply1=ply1=1;
+	Spherical(1,~az3[ply1],~el3[ply1]).rotate(0).y.round(0.001);	};
+~z1=3.collect{
+	plz1=plz1=1;
+	Spherical(1,~az3[plz1],~el3[plz1]).rotate(0).z.round(0.001);	};
+~x2=3.collect{
+	plx2=plx2=1;
+	Spherical(1,~az3[plx2],~el3[plx2]).rotate(90).x.round(0.001);	};
+~y2=3.collect{
+	ply2=ply2=1;
+	Spherical(1,~az3[ply2],~el3[ply2]).rotate(90).y.round(0.001);	};
+~z2=3.collect{
+	plz2=plz2=1;
+	Spherical(1,~az3[plz2],~el3[plz2]).rotate(90).z.round(0.001);	};
+
+3.do{ ~dur=~dur++~x1.[pl]++~y1.[pl]++~z1.[pl]++~x2.[pl]++~y2.[pl]++~z2.[pl]; pl=pl+1;};
+
+~dur=~dur.abs
+)
