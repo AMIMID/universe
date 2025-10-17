@@ -146,70 +146,6 @@ var pl=0,plx=1.neg,ply=1.neg,plz=1.neg;~dur=[];
 ~dur=~dur.abs
 )
 
-/////quaternion 4/4 rhythm τετράεδρο μέτρο
-
-//////////////////////with angle as argument, (along with Quaternion file
-	//axis=i+j+k;
-//////q1=((axis*exp(Complex(0,1)*angle).imag)+exp(Complex(0,1)*angle).real); v1=q1*v1*q1.conjugate;
-
-///////////use distance .distance between quaternions pl1 points as some kind of modulation
-/*(
-var q1,q2,dist;
-q1=Quaternion(0,1,1,1); q2=Quaternion(0,0,0,0);
-dist=q1.distance(q2);
-dist.postln;)*/
-
-(
-var pl=0,plq=1.neg,pli=1.neg,plj=1.neg,plk=1.neg,i,j,k,axis,r,angle=72; ~dur=[];
-
-axis=[1,1,1].normalizeSum.sqrt;
-i=Quaternion(0, axis.[0], 0, 0);
-j=Quaternion(0, 0, axis.[1], 0);
-k=Quaternion(0, 0, 0, axis.[2]);
-r=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
-
-~q=4.collect{
-	plq=plq=1;
-	(r*Quaternion(0,Spherical(1,~az[plq],~el[plq]).x,Spherical(1,~az[plq],~el[plq]).y,Spherical(1,~az[plq],~el[plq]).z)).a.round(0.001);	};
-~i=4.collect{
-	pli=pli=1;
-	(r*Quaternion(0,Spherical(1,~az[pli],~el[pli]).x,Spherical(1,~az[pli],~el[pli]).y,Spherical(1,~az[pli],~el[pli]).z)).b.round(0.001);	};
-~j=4.collect{
-	plj=plj=1;
-	(r*Quaternion(0,Spherical(1,~az[plj],~el[plj]).x,Spherical(1,~az[plj],~el[plj]).y,Spherical(1,~az[plj],~el[plj]).z)).c.round(0.001);	};
-~k=4.collect{
-	plk=plk=1;
-	(r*Quaternion(0,Spherical(1,~az[plk],~el[plk]).x,Spherical(1,~az[plk],~el[plk]).y,Spherical(1,~az[plk],~el[plk]).z)).d.round(0.001);	};
-
-3.do{ ~dur=~dur++~q.[pl]++~i.[pl]++~j.[pl]++~k.[pl]; pl=pl+1;};
-
-~dur=~dur.abs
-)
-
-(
-SynthDef.new(\R, {
-var env,sig;
-
-	env=EnvGen.ar(Env.perc(0.01,0.5,0.15));
-		sig=Saw.ar(440,env);
-	Out.ar([0,1],sig);
-
-}).add;
-)
-
-//////////pattern
-
-	(
-		~rh=Pdef(\1, Pbind(\instrument, \R,
-			\dur,Pseq(~dur,inf)))
-)
-
-
-TempoClock.default.tempo_(1/2);
-
-
-~rh.play;
-
 ///8metra xyz rh
 (
 var plm1=0,plm2=0,plx1=1.neg,ply1=1.neg,plz1=1.neg,plx2=1.neg,ply2=1.neg,plz2=1.neg;~dur=[];
@@ -238,3 +174,79 @@ var plm1=0,plm2=0,plx1=1.neg,ply1=1.neg,plz1=1.neg,plx2=1.neg,ply2=1.neg,plz2=1.
 
 ~dur=~dur.abs
 )
+
+
+
+/////xyz metro can be used for dur of pattern and quaternion with 4 metro including the value of 0 can be used as amp argument for the synth envelope like L-system from previous examples. Musicaly this indicates the time or presence(amp) signature of each note and pauses etc.
+
+
+/////quaternion 4/4 rhythm τετράεδρο μέτρο
+
+//////////////////////with angle as argument, (along with Quaternion file
+	//axis=i+j+k;
+//////q1=((axis*exp(Complex(0,1)*angle).imag)+exp(Complex(0,1)*angle).real); v1=q1*v1*q1.conjugate;
+
+///////////use distance .distance between quaternions pl1 points as some kind of modulation
+/*(
+var q1,q2,dist;
+q1=Quaternion(0,1,1,1); q2=Quaternion(0,0,0,0);
+dist=q1.distance(q2);
+dist.postln;)*/
+
+(
+var pl=0,plq=1.neg,pli=1.neg,plj=1.neg,plk=1.neg,i,j,k,axis,r,angle=90; ~tones=[];
+
+axis=[1,1,1].normalizeSum.sqrt;
+i=Quaternion(0, axis.[0], 0, 0);
+j=Quaternion(0, 0, axis.[1], 0);
+k=Quaternion(0, 0, 0, axis.[2]);
+r=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+
+~q=4.collect{
+	plq=plq=1;
+	(r*Quaternion(0,Spherical(1,~az[plq],~el[plq]).x,Spherical(1,~az[plq],~el[plq]).y,Spherical(1,~az[plq],~el[plq]).z)).a.round(0.001);	};
+~i=4.collect{
+	pli=pli=1;
+	(r*Quaternion(0,Spherical(1,~az[pli],~el[pli]).x,Spherical(1,~az[pli],~el[pli]).y,Spherical(1,~az[pli],~el[pli]).z)).b.round(0.001);	};
+~j=4.collect{
+	plj=plj=1;
+	(r*Quaternion(0,Spherical(1,~az[plj],~el[plj]).x,Spherical(1,~az[plj],~el[plj]).y,Spherical(1,~az[plj],~el[plj]).z)).c.round(0.001);	};
+~k=4.collect{
+	plk=plk=1;
+	(r*Quaternion(0,Spherical(1,~az[plk],~el[plk]).x,Spherical(1,~az[plk],~el[plk]).y,Spherical(1,~az[plk],~el[plk]).z)).d.round(0.001);	};
+
+4.do{ ~tones=~tones++~q.[pl]++~i.[pl]++~j.[pl]++~k.[pl]; pl=pl+1;};
+
+~tones=~tones.abs
+)
+
+
+
+//////synth example
+
+(
+SynthDef.new(\R, {
+	arg tone_signature;
+var env,sig;
+	env=EnvGen.ar(Env.perc(0.01,0.5,tone_signature));
+		sig=Saw.ar(440,env);
+	Out.ar([0,1],sig);
+
+}).add;
+)
+
+//////////pattern
+
+	(
+		~rh=Pdef(\1, Pbind(\instrument, \R,
+			\dur,Pseq(~dur,inf),
+	\tone_signature,Pseq(~tones,inf);
+		))
+)
+
+
+
+TempoClock.default.tempo_(1/2);
+
+
+~rh.play;
