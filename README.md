@@ -1,19 +1,5 @@
-
-///
-  Universe is a generative algorithmic additive synthesis with Task, Pattern, Routine, SynthDef architecture conceptualizeing an animation and auditory timeline of the cosmos,
-utilizing harmonics, sound art, control randomness, music theory, spatial sound and quaternions. The generative synth can be used as standalone with percussive envelopes in quad, 
-cubic or 12 channel sound installations (VBAP),or as a drone with parallel Midiout and AM/FM with the addition of external synths 
-like the Vermona Perfourmer or other Behringer modules and sequencers, for drum and bass generative techno setups.
-
-
-//
-files include:
--relevant sources and ideas.
--notes for code.
--notes for installation, setup and equipment.
--array indormation for cosmic spherical objects and harmonics (Ambisonics, Bessel etc.).
--composition files for Synthdef and control methods.
--sculptor which is the code bundle for additioin with external synths.
--midiout.
--animation and digital image.
-
+Here you will find relative to the composition math mainly from wiki and ai language model.
+I would highly reccomenf viewing 3blue1broen on the use of quaternions, cimplex numbers and other vektor related mathematics.
+Polytopes and geodesies are also important. A lot of other math can be learned via SuperCollider refernce libraries or are ready made objects in the mathlib.
+For harmonics advice rlative content, theory of musc and intervals but also physical properties of sound and psychoacoustics.
+Loudspeaker design and room eq are also important knowledge for instllation realization anf high fidelity.
