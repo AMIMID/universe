@@ -8,3 +8,4 @@ o polytope compund of cube and octahedron with 12channels.
 
 The cube in this control case as geometric interpolation works not as a material(eg cosmos in the cosmographic categories) but a general use of the cube as guide
 as it is composed of two tetrahedra which correspond symbolically to the bipolarity of conscioussness as real and imagniary components of one monad (cycle, euler identity).
+For example according to the cosmographic timeline this geometric interpolation is cube and octahedron at the start and end of the wavetable of one cosmic lifcycle but icosahedfrla and dodecahedron in the middle section of the envelope.
