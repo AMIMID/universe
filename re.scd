@@ -7,19 +7,13 @@ s.options.memSize = 8192*64;
 s.options.blockSize = 64;
 s.options.maxNodes = 1024 * 16;
 s.options.sampleRate= 44100;
-s.recHeaderFormat="aiff";
-//s.recSampleFormat ="int16";
-s.recChannels = 4;
-s.boot;
+s.waitForBoot
 )
-
-
-Buffer.freeAll
 (
 //~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/sakelariou2.wav",channels:0 );
 //~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/sakelariou2.wav",channels:1 );
-~c1 = Buffer.readChannel(s,"/Users/amimid/Desktop/1.wav",channels:0 );
-//~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/444444.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/pirates city.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/pirates city.wav",channels:1 );
 )
 
 ////speaker setup
@@ -41,7 +35,7 @@ var num=1.neg;
 var ellipsis=[1,1,1],spread=1;
 			~az=[];~el=[];~magx=[];~magy=[];~magz=[];~dur=[];
 
-		13.do{
+		360.do{
 durx=(12).collect{
 			azx = (angle+(360*2.pow(plx/12))).wrap(180.neg,180);  // Increment azimuth
 				elx = (angle+(180*2.pow(plx/12))).wrap(90.neg,90);
@@ -136,43 +130,50 @@ mag_z=(Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((s
 				12.do{ num=num+1; ~dur=~dur++durx.[num]++dury.[num]++durz.[num];};num=1.neg;};
 }.value;
 (
-{
-var nn=1.neg;
-~array=156.collect{nn=nn+1
-}}.value;
-~array=~array.scramble;
-);
+//~magx = ~magx.collect { |z| z / ~magx.maxItem };
+//~magy = ~magy.collect { |z| z / ~magy.maxItem };
+//~magz = ~magz.collect { |z| z / ~magz.maxItem };
+ );
 )
-
+	({
+		var n=1.neg;
+		~list=(360*12).collect{
+		n=n+1;
+		}
+		}.value
+	);
+~list1=~list.scramble;
+~list2=~list.scramble;
 
 
 (
 SynthDef.new(\o_reverb, {
     var in1,in2,in3,in4,chaina,chainb,chainc,chaind,b=0;
-	var chainxx,chainyy,pl=0,amp,magg,lfo,per;
+	var chainxx,chainyy,pl1=0,amp,magg,lfo;
 	var chainaa,chainbb,chaincc,chaindd,chainee,chainff;
-	var ph,frames=512,sig1,sig2,sig3,sig4,spread=1;
+	var ph,frames=512,sig1,sig2,sig3,sig4,spread=1,sph1;
 	var delay,decay,sph,mod_angle,mod_angle1,m=3,mq=2;
 	var magx,magy,magz,mag_x,mag_y,mag_z,magqx,magqy,mag_qx,mag_qy;
 
      in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1.bufnum), loop: 0, doneAction:0);
-	//in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:0);
+	in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2.bufnum), loop: 0, doneAction:0);
 	// in3 = PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3.bufnum), loop: 0, doneAction:0);
 	// in4 = PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4.bufnum), loop: 0, doneAction:0);
 	/* in1 = SoundIn.ar(0);in2 = SoundIn.ar(1);
 	 in3 = SoundIn.ar(2) in4 = SoundIn.ar(3);*/
 
 	chaina = FFT(LocalBuf(frames), in1);
-	//chainb = FFT(LocalBuf(frames), in2);
+	chainb = FFT(LocalBuf(frames), in2);
 	//chainc = FFT(LocalBuf(frames), in3);chaind = FFT(LocalBuf(frames), in4);
 
-	lfo=MouseX.kr(0.1,100);
+	lfo=0.1;
 	mod_angle=SinOsc.ar(lfo,0.degrad).range(90.neg.degrad,90.degrad);
 	mod_angle1=SinOsc.ar(lfo,90.degrad).range(90.neg.degrad,90.degrad);
 
-	156.do{
+	200.do{
 
-		sph=Spherical(1,~az.[~array.[pl]],~el.[~array.[pl]]);
+		sph=Spherical(1,~az.[~list1.[pl1]],~el.[~list1.[pl1]]);
+		sph1=Spherical(1,~az.[~list2.[pl1]],~el.[~list2.[pl1]]);
 		(
 		magx=((Complex(cos(((sph.theta+mod_angle).round(0.00001)*m).wrap(pi.neg,pi)),cos((((sph.theta+mod_angle).round(0.00001)*m)).wrap(pi.neg,pi))).rho/(2.sqrt)).pow(spread)*
 	(Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho/(2.sqrt)).pow(spread);
@@ -201,12 +202,13 @@ cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))))).rho/(2.sqrt)).pow(spre
 				mag_x=magx.value;mag_y=magy.value;mag_z=magz.value;mag_qx=magqx.value;mag_qy=magqy.value
 				);
 
-magg=(Cartesian(mag_x,mag_y,mag_z).rho/2.sqrt)+(Cartesian(mag_qx,mag_qy,0).rho/2.sqrt);
-		per=Spherical(360.degrad,sph.theta,sph.phi);
-			ph=(per.x+per.y+per.z).wrap(2pi.neg,2pi);
+magg=(Cartesian(mag_x,mag_y,mag_z).rho/2.sqrt)+(Cartesian(mag_qx,mag_qy,mag_z).rho/2.sqrt);
+ph=Complex(sph.theta.linlin(pi.neg,pi,1.neg,1),sph.phi.linlin((pi/2).neg,(pi/2),1.neg,1)).theta;
 
-chainaa = chaina.pvcollect(frames, {|mag, phase, index| [mag*magg, phase+ph]; }, frombin: b, tobin: b, zeroothers: 1);
-//chainbb = chainb.pvcollect(frames, {|mag, phase, index| [mag, phase+ph]; }, frombin: b, tobin: b, zeroothers: 1);
+//chainaa = chaina.pvcollect(frames, {|mag, phase, index| [mag*magg/10, phase+ph]; }, frombin: b, tobin: b, zeroothers: 1);
+//chainbb = chainb.pvcollect(frames, {|mag, phase, index| [mag*magg/10, phase+ph]; }, frombin: b, tobin: b, zeroothers: 1);
+chainaa = chaina.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+chainbb = chainb.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 //chaincc = chainc.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 //chaindd = chaind.pvcollect(frames, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 b=b+1;
@@ -236,34 +238,26 @@ chainff = chainf.pvcollect(frames,
 {|mag, phase, index| [mag*amp1, exp(Complex(0,1)*(phase+phase1)).theta]; },
 frombin: b, tobin: b, zeroothers: 1);*/
 
-//delay=magg/100;
-//decay=0.1;
+delay=magg/100;
+decay=0.1;
 
-//sig1=CombC.ar(IFFT(chainaa),maxdelaytime:1,delaytime:delay,decaytime:decay);///echo
-//sig2=CombC.ar(IFFT(chainbb),maxdelaytime:1,delaytime:delay,decaytime:decay);
+sig1=IFFT(chainaa);
+sig2=IFFT(chainbb);
 //sig1=Greyhole.ar(IFFT(chainaa),delayTime:delay,damp:0.1);
 //sig2=Greyhole.ar(IFFT(chainbb),delayTime:delay,damp:0.1);
 //sig3=CombC.ar(IFFT(chaincc),maxdelaytime:delay,delaytime:delay,decaytime:decay);
 //sig4=CombC.ar(IFFT(chaindd),maxdelaytime:delay,delaytime:delay,decaytime:decay);
 
-//Out.ar(0,LeakDC.ar(sig1));
-//Out.ar(1,LeakDC.ar(sig2));
-//Out.ar(2,LeakDC.ar(sig3));
-//Out.ar(3,LeakDC.ar(sig4));
+//Out.ar(0,LeakDC.ar(sig1));Out.ar(0,LeakDC.ar(sig2));
+//Out.ar(2,LeakDC.ar(sig3));Out.ar(3,LeakDC.ar(sig4));
 
-Out.ar(0,VBAP.ar(4,LeakDC.ar(IFFT(chainaa)),~b.bufnum,sph.theta.raddeg,sph.phi.raddeg));			//Out.ar(0,VBAP.ar(4,LeakDC.ar(IFFT(chainbb)),~b.bufnum,sph.theta.raddeg,sph.phi.raddeg));
+Out.ar(0,VBAP.ar(4,LeakDC.ar(sig1),~b.bufnum,sph.theta.raddeg,sph.phi.raddeg));		Out.ar(0,VBAP.ar(4,LeakDC.ar(sig2),~b.bufnum,sph1.theta.raddeg,sph1.phi.raddeg));
 
 
-//pl1=pl1+1;
-	pl=pl+1;
-	};
+pl1=pl1+1;};
 }).add;
 )
 
 
-
-
-(
 Synth(\o_reverb);
-s.record(numChannels:4,duration:(54+(4*60)));
-)
+s.record(numChannels:4);
