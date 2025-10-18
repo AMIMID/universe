@@ -1,19 +1,7 @@
+this branch conatins the one Synthdef of the compositoin where all control end up to its oscillator, envelpoe, filters,and other arguments.
+Theouput is VBAP and the oscillator is additive synthesis (percussive envelope when used as standalons, sine envelope when used as am drone for external midi connection to analog oscillators).
+The oscillator arguments follow the cosmography timeline through ronal , amplitude and phasial harmony, and it ahs specific wavetable naure with a basis fundamental wave of a nonoperiodec tendency nature for natural computer sound preferencies. The oscillator is essentially controlled through the modulated control array pattern/routine passed first through the material array and its site specific timeline and musical content.
 
-///
-  Universe is a generative algorithmic additive synthesis with Task, Pattern, Routine, SynthDef architecture conceptualizeing an animation and auditory timeline of the cosmos,
-utilizing harmonics, sound art, control randomness, music theory, spatial sound and quaternions. The generative synth can be used as standalone with percussive envelopes in quad, 
-cubic or 12 channel sound installations (VBAP),or as a drone with parallel Midiout and AM/FM with the addition of external synths 
-like the Vermona Perfourmer or other Behringer modules and sequencers, for drum and bass generative techno setups.
+ Note that oscillators are addded together in an oscillator saw wave bank with silver ratio intervals according to location aproximation of the depth (magnitude) location of the relative material tensor. Eg. if at some point of the timeline a cosmographical objects that controls part of the oscillator arguments includes four magnitudes through approximation adn a specific spherical coordinate these 4 magnitudes will form the oscillator bank sawtooth wave multipliers.
 
-
-//
-files include:
--relevant sources and ideas.
--notes for code.
--notes for installation, setup and equipment.
--array indormation for cosmic spherical objects and harmonics (Ambisonics, Bessel etc.).
--composition files for Synthdef and control methods.
--sculptor which is the code bundle for additioin with external synths.
--midiout.
--animation and digital image.
-
+ Note that the onl;y cosmographival objects that create these bnaks of oscillators are suns/solar systems, as all other objects that have different vektor magnitudes in their sets are treated seperately (each point in time) as temporal tonal modulation and not waveform banks. Of course one pint in the sun oscillator bunk is always a fundamentsl.
